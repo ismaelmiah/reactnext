@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React,  { useContext, useState } from 'react';
 import { getProducts } from "../../utils/data";
 import {
   Box,
@@ -13,8 +13,10 @@ import {
 } from "@material-ui/core";
 
 import { useStyles } from "../../utils/styles";
+import { Store } from '../../components/Store';
 
 export const getStaticPaths = async () => {
+  
   const paths = getProducts.map((x) => {
     return { params: { id: x.id.toString() } };
   });
@@ -37,6 +39,29 @@ export default function Details(props) {
 
   const [quantity, setQuantity] = useState(1);
   const { product } = props;
+  
+  const { state, dispatch } = useContext(Store);
+  //const { cart } = state;
+  console.log('Details - ', state)
+  
+  const addToCartHandler = async () => {
+    const commerce = getCommerce(props.commercePublicKey);
+    const lineItem = cart.data.line_items.find(
+      (x) => x.product_id === product.id
+    );
+    if (lineItem) {
+      const cartData = await commerce.cart.update(lineItem.id, {
+        quantity: quantity,
+      });
+      dispatch({ type: CART_RETRIEVE_SUCCESS, payload: cartData.cart });
+      Router.push('/cart');
+    } else {
+      const cartData = await commerce.cart.add(product.id, quantity);
+      dispatch({ type: CART_RETRIEVE_SUCCESS, payload: cartData.cart });
+      Router.push('/cart');
+    }
+  };
+
   return (
     <Slide key={product[0].name} direction="up" in={true}>
       <Grid container spacing={1}>
@@ -101,8 +126,6 @@ export default function Details(props) {
                         <form noValidate autoComplete="off">
                           <TextField
                             id="standard-basic"
-                            labelId="quanitity-label"
-                            id="quanitity"
                             fullWidth
                             onChange={(e) => setQuantity(e.target.value)}
                             value={quantity}
@@ -117,6 +140,7 @@ export default function Details(props) {
                       fullWidth
                       variant="contained"
                       color="primary"
+                      onClick={addToCartHandler}
                     >
                       Add to cart
                     </Button>

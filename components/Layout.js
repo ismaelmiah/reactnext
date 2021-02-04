@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -10,12 +10,26 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import { theme } from "../utils/styles";
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useStyles } from "../utils/styles";
+import { Store } from "../components/Store";
 
 export default function Layout({ children, title = "E-Commerce" }) {
-    
   const classes = useStyles();
+
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state;
+  console.log('Cart - Layout ', cart)
+  // useEffect(() => {
+  //   const fetchCart = () => {
+  //     dispatch({ type: CART_RETRIEVE_REQUEST });
+  //     const cartData = await commerce.cart.retrieve();
+  //     dispatch({ type: CART_RETRIEVE_SUCCESS, payload: cartData });
+  //   };
+  //   fetchCart();
+  // }, []);
+
+
   return (
     <React.Fragment>
       <Head>
@@ -71,7 +85,7 @@ export default function Layout({ children, title = "E-Commerce" }) {
         <Container maxWidth="md" component="footer">
           <Box mt={5}>
             <Typography variant="body2" color="textSecondary" align="center">
-              {"© "}
+              {"© Ecommerce"}
               2021
               {"."}
             </Typography>

@@ -1,31 +1,21 @@
-import React, { createContext, useReducer } from 'react';
-export const Store = createContext();
+import React, { createContext, useReducer } from "react";
+import { getProducts } from "../utils/data";
+
+const initialState = {
+  products: getProducts,
+  cart: null,
+  order: null
+};
+
+export const Store = createContext(initialState);
 // const order =
 //   typeof window !== 'undefined' && window.localStorage.getItem('order_receipt')
 //     ? JSON.parse(window.localStorage.getItem('order_receipt'))
 //     : null;
-// const initialState = {
-//   cart: { loading: true },
-//   order,
-//};
 
 function reducer(state, action) {
+  console.log('Reducer - ', action.type)
   switch (action.type) {
-    case CART_RETRIEVE_REQUEST:
-      return {
-        ...state,
-        cart: { loading: true },
-      };
-    case CART_RETRIEVE_SUCCESS:
-      return {
-        ...state,
-        cart: { loading: false, data: action.payload },
-      };
-    case ORDER_SET:
-      return {
-        ...state,
-        order: action.payload,
-      };
     default:
       return state;
   }
@@ -35,5 +25,6 @@ export function StoreProvider(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const value = { state, dispatch };
+
   return <Store.Provider value={value}>{props.children}</Store.Provider>;
 }
