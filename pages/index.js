@@ -42,7 +42,7 @@ export default function Home() {
                           color="textPrimary"
                           component="p"
                         >
-                          {product.price.formatted_with_symbol}
+                          $ {product.price}
                         </Typography>
                       </Box>
                     </CardContent>

@@ -8,7 +8,6 @@ export default function MyApp({ pageProps, Component }) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
-  console.log(pageProps, ' ', Component)
   return (
     <Layout>
       <Component {...pageProps} />
