@@ -40,26 +40,11 @@ export default function Details(props) {
   const [quantity, setQuantity] = useState(1);
   const { product } = props;
   
-  const { state, dispatch } = useContext(Store);
+  const { state, addToCart, dispatch } = useContext(Store);
   //const { cart } = state;
-  console.log('Details - ', state)
   
-  const addToCartHandler = async () => {
-    const commerce = getCommerce(props.commercePublicKey);
-    const lineItem = cart.data.line_items.find(
-      (x) => x.product_id === product.id
-    );
-    if (lineItem) {
-      const cartData = await commerce.cart.update(lineItem.id, {
-        quantity: quantity,
-      });
-      dispatch({ type: CART_RETRIEVE_SUCCESS, payload: cartData.cart });
-      Router.push('/cart');
-    } else {
-      const cartData = await commerce.cart.add(product.id, quantity);
-      dispatch({ type: CART_RETRIEVE_SUCCESS, payload: cartData.cart });
-      Router.push('/cart');
-    }
+  const addToCartHandler = () => {
+    addToCart(product)
   };
 
   return (

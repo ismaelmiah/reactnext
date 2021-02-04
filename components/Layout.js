@@ -19,7 +19,6 @@ export default function Layout({ children, title = "E-Commerce" }) {
 
   const { products, AddToCart } = useContext(Store);
   //const { cart } = state;
-  console.log('Cart - Layout ', products)
   // useEffect(() => {
   //   const fetchCart = () => {
   //     dispatch({ type: CART_RETRIEVE_REQUEST });

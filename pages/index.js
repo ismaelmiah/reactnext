@@ -13,7 +13,8 @@ import {
 import { Store } from "../components/Store";
 
 export default function Home(props) {
-  const { products, AddToCart } = useContext(Store);
+  const { state, AddToCart } = useContext(Store);
+  const products = state.state.products;
     return (
     <Grid container spacing={1}>
       {products.map((product) => (

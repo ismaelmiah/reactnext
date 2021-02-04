@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Layout from "../components/Layout";
-import { StoreProvider } from "../components/Store";
+import { StoreProvider } from '../components/Store';
 
 export default function MyApp({ pageProps, Component }) {
   useEffect(() => {
