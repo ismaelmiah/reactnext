@@ -7,40 +7,10 @@ const initialState = {
   cartTotal: 0,
 };
 
-const addProductToCart = (product, state) => {
-  const updatedCart = [...state.cart];
-  const updatedItemIndex = updatedCart.findIndex(
-    (item) => item.id === product.id
-  );
-
-  updatedCart.push({ ...product, quantity: 1 });
-  // if (updatedItemIndex < 0) {
-  //   updatedCart.push({ ...product, quantity: 1 });
-  // } else {
-  //   const updatedItem = {
-  //     ...updatedCart[updatedItemIndex],
-  //   };
-  //   updatedItem.quantity++;
-  //   updatedCart[updatedItemIndex] = updatedItem;
-  //   //console.log('updatedItem',updatedItem, '\nupdatedItemIndex', updatedItemIndex, '\nCart: ', updatedCart)
-  // }
-  return { ...state, cart: updatedCart };
-};
 
 export const Store = createContext(initialState);
-function reducer(state, action) {
-  switch (action.type) {
-    case "ADD_CART":
-      return addProductToCart(action.payload, state);
-    case "REMOVE_CART":
-      return {
-        ...state,
-        cart: state.cart.filter((c) => c.id !== action.payload),
-      };
-    default:
-      return state;
-  }
-}
+
+
 
 export function StoreProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -53,6 +23,43 @@ export function StoreProvider({ children }) {
       payload: product,
     });
     //localStorage.setItem('cart', JSON.stringify(state.cart));
+  }
+
+  const addProductToCart = (product) => {
+    
+    //console.log('\nupdatedItemIndex', updatedItemIndex, '\nCart: ', updatedCart)
+    
+  };
+  
+  function reducer(state, action) {
+    switch (action.type) {
+      case "ADD_CART":
+        {
+            const updatedCart = [...state.cart];
+            console.log([...updatedCart], action, "cart");
+            const updatedItemIndex = updatedCart.findIndex(
+              (item) => item.id === action.payload[0].id
+            );
+            if (updatedItemIndex < 0) {
+              updatedCart.push({ ...action.payload, quantity: 1 });
+            } else {
+              const updatedItem = {
+                ...updatedCart[updatedItemIndex],
+              };
+              updatedItem.quantity++;
+              updatedCart[updatedItemIndex] = updatedItem;
+              
+            }
+            return { ...state, cart: updatedCart };
+        }
+      case "REMOVE_CART":
+        return {
+          ...state,
+          cart: state.cart.filter((c) => c.id !== action.payload),
+        };
+      default:
+        return state;
+    }
   }
 
   // RemoveCart = (productId) => {
