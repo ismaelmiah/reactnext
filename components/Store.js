@@ -36,12 +36,12 @@ export function StoreProvider({ children }) {
       case "ADD_CART":
         {
             const updatedCart = [...state.cart];
-            console.log([...updatedCart], action, "cart");
+            //console.log([...updatedCart], action, "cart");
             const updatedItemIndex = updatedCart.findIndex(
               (item) => item.id === action.payload[0].id
             );
             if (updatedItemIndex < 0) {
-              updatedCart.push({ ...action.payload, quantity: 1 });
+              updatedCart.push({ ...action.payload[0], quantity: 1 });
             } else {
               const updatedItem = {
                 ...updatedCart[updatedItemIndex],

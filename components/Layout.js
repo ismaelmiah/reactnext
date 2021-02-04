@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,23 +12,18 @@ import Box from "@material-ui/core/Box";
 import { theme } from "../utils/styles";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useStyles } from "../utils/styles";
+import { Badge, CircularProgress } from "@material-ui/core";
 import { Store } from "../components/Store";
 
 export default function Layout({ children, title = "E-Commerce" }) {
   const classes = useStyles();
 
-  const { products, AddToCart } = useContext(Store);
-  //const { cart } = state;
-  // useEffect(() => {
-  //   const fetchCart = () => {
-  //     dispatch({ type: CART_RETRIEVE_REQUEST });
-  //     const cartData = await commerce.cart.retrieve();
-  //     dispatch({ type: CART_RETRIEVE_SUCCESS, payload: cartData });
-  //   };
-  //   fetchCart();
-  // }, []);
-
-
+  const { state, AddToCart } = useContext(Store);
+  const cart = state.state.cart;
+  console.log(cart);
+  useEffect(() => {
+    // //setCart(JSON.parse(localStorage.getItem("myCart")) || []);
+  }, []);
   return (
     <React.Fragment>
       <Head>
@@ -70,7 +65,13 @@ export default function Layout({ children, title = "E-Commerce" }) {
                   href="/cart"
                   className={classes.link}
                 >
-                  <ShoppingCartIcon />
+                  {cart.length > 0 ? (
+                    <Badge badgeContent={cart.length} color="primary">
+                      <ShoppingCartIcon />
+                    </Badge>
+                  ) : (
+                    <ShoppingCartIcon />
+                  )}
                 </Link>
               </NextLink>
             </nav>
