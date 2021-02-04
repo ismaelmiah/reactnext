@@ -13,10 +13,8 @@ import {
 import { Store } from "../components/Store";
 
 export default function Home(props) {
-  const {state, dispatch} = useContext(Store);
-  const { products } = state;
-
-  return (
+  const { products, AddToCart } = useContext(Store);
+    return (
     <Grid container spacing={1}>
       {products.map((product) => (
         <Slide key={product.id} direction="up" in={true}>

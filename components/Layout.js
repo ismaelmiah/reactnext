@@ -17,9 +17,9 @@ import { Store } from "../components/Store";
 export default function Layout({ children, title = "E-Commerce" }) {
   const classes = useStyles();
 
-  const { state, dispatch } = useContext(Store);
-  const { cart } = state;
-  console.log('Cart - Layout ', cart)
+  const { products, AddToCart } = useContext(Store);
+  //const { cart } = state;
+  console.log('Cart - Layout ', products)
   // useEffect(() => {
   //   const fetchCart = () => {
   //     dispatch({ type: CART_RETRIEVE_REQUEST });
