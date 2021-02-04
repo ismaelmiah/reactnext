@@ -9,21 +9,21 @@ const initialState = {
 
 const addProductToCart = (product, state) => {
   const updatedCart = [...state.cart];
-  console.log("AddToCart: ", product);
   const updatedItemIndex = updatedCart.findIndex(
     (item) => item.id === product.id
   );
 
-  if (updatedItemIndex < 0) {
-    updatedCart.push({ ...product, quantity: 1 });
-  } else {
-    const updatedItem = {
-      ...updatedCart[updatedItemIndex],
-    };
-    updatedItem.quantity++;
-    updatedCart[updatedItemIndex] = updatedItem;
-    //console.log('updatedItem',updatedItem, '\nupdatedItemIndex', updatedItemIndex, '\nCart: ', updatedCart)
-  }
+  updatedCart.push({ ...product, quantity: 1 });
+  // if (updatedItemIndex < 0) {
+  //   updatedCart.push({ ...product, quantity: 1 });
+  // } else {
+  //   const updatedItem = {
+  //     ...updatedCart[updatedItemIndex],
+  //   };
+  //   updatedItem.quantity++;
+  //   updatedCart[updatedItemIndex] = updatedItem;
+  //   //console.log('updatedItem',updatedItem, '\nupdatedItemIndex', updatedItemIndex, '\nCart: ', updatedCart)
+  // }
   return { ...state, cart: updatedCart };
 };
 
