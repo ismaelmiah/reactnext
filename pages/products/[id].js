@@ -7,8 +7,7 @@ import {
   Grid,
   List,
   ListItem,
-  MenuItem,
-  Select,
+  TextField,
   Slide,
   Typography,
 } from "@material-ui/core";
@@ -33,7 +32,7 @@ export const getStaticProps = async (context) => {
   };
 };
 
-export default function Home(props) {
+export default function Details(props) {
   const classes = useStyles();
 
   const [quantity, setQuantity] = useState(1);
@@ -99,19 +98,16 @@ export default function Home(props) {
                         Quantity
                       </Grid>
                       <Grid item xs={6}>
-                        <Select
-                          labelId="quanitity-label"
-                          id="quanitity"
-                          fullWidth
-                          onChange={(e) => setQuantity(e.target.value)}
-                          value={quantity}
-                        >
-                          {[...Array(product[0].quantity).keys()].map((x) => (
-                            <MenuItem key={x + 1} value={x + 1}>
-                              {x + 1}
-                            </MenuItem>
-                          ))}
-                        </Select>
+                        <form noValidate autoComplete="off">
+                          <TextField
+                            id="standard-basic"
+                            labelId="quanitity-label"
+                            id="quanitity"
+                            fullWidth
+                            onChange={(e) => setQuantity(e.target.value)}
+                            value={quantity}
+                          />
+                        </form>
                       </Grid>
                     </Grid>
                   </ListItem>
