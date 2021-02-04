@@ -50,6 +50,7 @@ export function StoreProvider({ children }) {
               updatedCart[updatedItemIndex] = updatedItem;
               
             }
+            localStorage.setItem("myCart", updatedCart);
             return { ...state, cart: updatedCart };
         }
       case "REMOVE_CART":
