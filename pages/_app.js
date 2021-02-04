@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import Layout from '../components/Layout'
+import Layout from "../components/Layout";
+import { StoreProvider } from '../components/Store';
+
 export default function MyApp({ pageProps, Component }) {
   useEffect(() => {
     // Remove the server-side injected CSS.
@@ -8,10 +10,11 @@ export default function MyApp({ pageProps, Component }) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
-  console.log(pageProps, ' ', Component)
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <StoreProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </StoreProvider>
   );
 }
