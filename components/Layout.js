@@ -19,19 +19,19 @@ export default function Layout({ children, title = "E-Commerce" }) {
   const classes = useStyles();
 
   const { state, AddToCart } = useContext(Store);
-  const [cart, setCart] = useState(state.state.cart);
-  ///// console.log(cart);
-  useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem("myCart"));
-    setCart((prev) => {
-      return {
-        ...prev,
-        cart: localData,
-      };
-    });
-  }, []);
+  const [cart, setCart] = useState([]);
 
-  
+  const tempcart = state.state.cart;
+
+  useEffect(() => {
+    setCart(
+      JSON.parse(localStorage.getItem("myCart"))?.length  > state.state.cart
+        ? JSON.parse(localStorage.getItem("myCart"))
+        : state.state.cart
+    );
+    console.log('Cart Changes')
+  }, [tempcart]);
+
   return (
     <React.Fragment>
       <Head>
