@@ -14,10 +14,10 @@ import {
 } from "@material-ui/core";
 
 import { useStyles } from "../../utils/styles";
-import { Store } from "../../components/Store";
+import data from "../../utils/data.json";
 
 export const getStaticPaths = async () => {
-  const paths = getProducts.map((x) => {
+  const paths = data.map((x) => {
     return { params: { id: x.id.toString() } };
   });
   return {
@@ -27,8 +27,11 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async (context) => {
-  const id = parseInt(context.params.id);
-  const product = getProducts.filter((x) => x.id === id);
+  const id = context.params.id;
+  let product;
+  data.map((x) => {
+    if (x.id == id) product = x;
+  });
   return {
     props: { product },
   };
@@ -36,102 +39,95 @@ export const getStaticProps = async (context) => {
 
 export default function Details(props) {
   const classes = useStyles();
-
-  const [quantity, setQuantity] = useState(1);
   const { product } = props;
-
-  const { state, addToCart, dispatch } = useContext(Store);
-  //const { cart } = state;
 
   const addToCartHandler = () => {
     addToCart(product);
   };
 
   return (
-    <Layout title="Details">
-      <Slide key={product[0].name} direction="up" in={true}>
-        <Grid container spacing={1}>
-          <Grid item md={6}>
-            <img
-              alt={product[0].name}
-              src={`/images/${product[0].id}.jpg`}
-              className={classes.largeImage}
-            />
-          </Grid>
-          <Grid item md={3} xs={12}>
+    <Slide key={product.name} direction="up" in={true}>
+      <Grid container spacing={1}>
+        <Grid item md={6}>
+          <img
+            alt={product.name}
+            src={`/images/${product.id}.jpg`}
+            className={classes.largeImage}
+          />
+        </Grid>
+        <Grid item md={3} xs={12}>
+          <List>
+            <ListItem>
+              <Typography
+                gutterBottom
+                variant="h6"
+                color="textPrimary"
+                component="h1"
+              >
+                {product.name}
+              </Typography>
+            </ListItem>
+            <ListItem>
+              <Box
+                dangerouslySetInnerHTML={{ __html: product.description }}
+              ></Box>
+            </ListItem>
+          </List>
+        </Grid>
+        <Grid item md={3} xs={12}>
+          <Card>
             <List>
               <ListItem>
-                <Typography
-                  gutterBottom
-                  variant="h6"
-                  color="textPrimary"
-                  component="h1"
-                >
-                  {product[0].name}
-                </Typography>
-              </ListItem>
-              <ListItem>
-                <Box
-                  dangerouslySetInnerHTML={{ __html: product[0].description }}
-                ></Box>
-              </ListItem>
-            </List>
-          </Grid>
-          <Grid item md={3} xs={12}>
-            <Card>
-              <List>
-                <ListItem>
-                  <Grid container>
-                    <Grid item xs={6}>
-                      Price
-                    </Grid>
-                    <Grid item xs={6}>
-                      {product[0].price}
-                    </Grid>
+                <Grid container>
+                  <Grid item xs={6}>
+                    Price
                   </Grid>
-                </ListItem>
+                  <Grid item xs={6}>
+                    {product.price}
+                  </Grid>
+                </Grid>
+              </ListItem>
 
-                <ListItem>
-                  <Grid alignItems="center" container>
-                    <Grid item xs={6}>
-                      Status
-                    </Grid>
-                    <Grid item xs={6}>
-                      {product[0].quantity > 0 ? "In Stock" : "Unavailable"}
-                    </Grid>
+              <ListItem>
+                <Grid alignItems="center" container>
+                  <Grid item xs={6}>
+                    Status
                   </Grid>
+                  <Grid item xs={6}>
+                    {product.quantity > 0 ? "In Stock" : "Unavailable"}
+                  </Grid>
+                </Grid>
+              </ListItem>
+              {product.quantity === 0 ? (
+                <ListItem>
+                  <Button
+                    type="button"
+                    disabled
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={addToCartHandler}
+                  >
+                    Add to cart
+                  </Button>
                 </ListItem>
-                {product[0].quantity === 0 ? (
-                  <ListItem>
-                    <Button
-                      type="button"
-                      disabled
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      onClick={addToCartHandler}
-                    >
-                      Add to cart
-                    </Button>
-                  </ListItem>
-                ) : (
-                  <ListItem>
-                    <Button
-                      type="button"
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      onClick={addToCartHandler}
-                    >
-                      Add to cart
-                    </Button>
-                  </ListItem>
-                )}
-              </List>
-            </Card>
-          </Grid>
+              ) : (
+                <ListItem>
+                  <Button
+                    type="button"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={addToCartHandler}
+                  >
+                    Add to cart
+                  </Button>
+                </ListItem>
+              )}
+            </List>
+          </Card>
         </Grid>
-      </Slide>
-    </Layout>
+      </Grid>
+    </Slide>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import Layout from "../components/Layout";
-import { StoreProvider } from "../components/Store";
+import { Layout } from "../components/Layout";
+import { CartProvider } from "../components/cartContext";
 
 export default function MyApp({ pageProps, Component }) {
   useEffect(() => {
@@ -10,9 +10,12 @@ export default function MyApp({ pageProps, Component }) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
   }, []);
+
   return (
-    <StoreProvider>
+    <CartProvider>
+      <Layout>
         <Component {...pageProps} />
-    </StoreProvider>
+      </Layout>
+    </CartProvider>
   );
 }

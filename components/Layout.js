@@ -12,31 +12,20 @@ import Box from "@material-ui/core/Box";
 import { theme } from "../utils/styles";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useStyles } from "../utils/styles";
-import { Badge, CircularProgress } from "@material-ui/core";
-import { Store } from "../components/Store";
+import { Badge } from "@material-ui/core";
+import { CartContext } from "../components/CartContext";
+import { CallMerge } from "@material-ui/icons";
+import { useCart } from "./cartContext";
 
-export default function Layout({ children, title = "E-Commerce" }) {
+export const Layout = ({ children }) => {
   const classes = useStyles();
-
-  const { state, AddToCart } = useContext(Store);
-  const [cart, setCart] = useState([]);
-
-  const tempcart = state.state.cart;
-
-  useEffect(() => {
-    setCart(
-      JSON.parse(localStorage.getItem("myCart"))?.length > state.state.cart
-        ? JSON.parse(localStorage.getItem("myCart"))
-        : state.state.cart
-    );
-    console.log("Cart Changes");
-  }, [tempcart]);
+  const { cart } = useCart();
 
   return (
     <React.Fragment>
       <Head>
         <meta charSet="utf-8" />
-        <title>{`${title} - E-commerce`}</title>
+        <title>E-commerce</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"
@@ -85,22 +74,11 @@ export default function Layout({ children, title = "E-Commerce" }) {
             </nav>
           </Toolbar>
         </AppBar>
-        {/* Hero unit */}
+
         <Container component="main" className={classes.main}>
           {children}
         </Container>
-        {/* End hero unit */}
-        <Container maxWidth="md" component="footer">
-          <Box mt={5}>
-            <Typography variant="body2" color="textSecondary" align="center">
-              {"© Ecommerce"}
-              2021
-              {"."}
-            </Typography>
-          </Box>
-        </Container>
-        {/* End footer */}
       </ThemeProvider>
     </React.Fragment>
   );
-}
+};

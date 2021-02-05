@@ -10,52 +10,55 @@ import {
   CardMedia,
   Typography,
 } from "@material-ui/core";
-import { Store } from "../components/Store";
-import Layout from "../components/Layout";
+import data from "../utils/data.json";
 
-export default function Home(props) {
-  const { state, AddToCart } = useContext(Store);
-  const products = state.state.products;
+export default function Home({ products }) {
   return (
-    <Layout title="Home">
-      <Grid container spacing={1}>
-        {products.map((product) => (
-          <Slide key={product.id} direction="up" in={true}>
-            <Grid item md={3}>
-              <Card>
-                <Link href={`/products/${product.id}`}>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      alt={product.name}
-                      image={`/images/${product.id}.jpg`}
-                    />
-                    <CardContent>
+    <Grid container spacing={1}>
+      {products.map((product) => (
+        <Slide key={product.id} direction="up" in={true}>
+          <Grid item md={3}>
+            <Card>
+              <Link href={`/products/${product.id}`}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    alt={product.name}
+                    image={`/images/${product.id}.jpg`}
+                  />
+                  <CardContent>
+                    <Typography
+                      gutterBottom
+                      variant="body2"
+                      color="textPrimary"
+                      component="p"
+                    >
+                      {product.name}
+                    </Typography>
+                    <Box>
                       <Typography
-                        gutterBottom
-                        variant="body2"
+                        variant="body1"
                         color="textPrimary"
                         component="p"
                       >
-                        {product.name}
+                        $ {product.price}
                       </Typography>
-                      <Box>
-                        <Typography
-                          variant="body1"
-                          color="textPrimary"
-                          component="p"
-                        >
-                          $ {product.price}
-                        </Typography>
-                      </Box>
-                    </CardContent>
-                  </CardActionArea>
-                </Link>
-              </Card>
-            </Grid>
-          </Slide>
-        ))}
-      </Grid>
-    </Layout>
+                    </Box>
+                  </CardContent>
+                </CardActionArea>
+              </Link>
+            </Card>
+          </Grid>
+        </Slide>
+      ))}
+    </Grid>
   );
 }
+
+export const getStaticProps = async (context) => {
+  return {
+    props: {
+      products: data,
+    },
+  };
+};
