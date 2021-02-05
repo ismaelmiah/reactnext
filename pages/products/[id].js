@@ -1,6 +1,5 @@
-import React, { useContext, useState } from "react";
-import { getProducts } from "../../utils/data";
-import Layout from "../../components/Layout";
+import data from "../../utils/data.json";
+import React, { useEffect } from "react";
 import {
   Box,
   Button,
@@ -8,13 +7,13 @@ import {
   Grid,
   List,
   ListItem,
-  TextField,
   Slide,
   Typography,
 } from "@material-ui/core";
 
 import { useStyles } from "../../utils/styles";
-import data from "../../utils/data.json";
+import { useCart } from "./../../components/cartContext";
+
 
 export const getStaticPaths = async () => {
   const paths = data.map((x) => {
@@ -27,24 +26,21 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async (context) => {
-  const id = context.params.id;
-  let product;
-  data.map((x) => {
-    if (x.id == id) product = x;
-  });
+  const id = parseInt(context.params.id);
+  let product = data.filter((x) => x.id === id)[0];
   return {
     props: { product },
   };
 };
 
-export default function Details(props) {
+export default function ProductDetails({ product }) {
   const classes = useStyles();
-  const { product } = props;
+
+  const { cart, addToCart } = useCart();
 
   const addToCartHandler = () => {
-    addToCart(product);
+    addToCart([...cart, product]);
   };
-
   return (
     <Slide key={product.name} direction="up" in={true}>
       <Grid container spacing={1}>
