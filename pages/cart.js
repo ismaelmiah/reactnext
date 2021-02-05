@@ -24,7 +24,20 @@ import Router from "next/router";
 const Cart = () => {
   const classes = useStyles();
 
-  const { cart } = useContext(CartContext);
+  const { cart, UpdateCart } = useContext(CartContext);
+
+  let subTotal = 0;
+  console.log('Cart - ', cart)
+
+  for (let key in cart) {
+    subTotal += cart[key].price;
+  }
+
+  const quantityChangeHandler = (product, newQuantity) => {
+    console.log(product.id, newQuantity)
+    UpdateCart(product.id, newQuantity);
+    console.log('Updated Cart ', cart)
+  };
 
   return (
     <React.Fragment>
@@ -69,11 +82,13 @@ const Cart = () => {
                                 }
                                 value={cartItem.quantity}
                               >
-                                {[...Array(10).keys()].map((x) => (
-                                  <MenuItem key={x + 1} value={x + 1}>
-                                    {x + 1}
-                                  </MenuItem>
-                                ))}
+                                {[...Array(cartItem.quantity).keys()].map(
+                                  (x) => (
+                                    <MenuItem key={x + 1} value={x + 1}>
+                                      {x + 1}
+                                    </MenuItem>
+                                  )
+                                )}
                               </Select>
                             </TableCell>
                             <TableCell align="right">
@@ -101,7 +116,9 @@ const Cart = () => {
                   <List>
                     <ListItem>
                       <Grid container>
-                        <Typography variant="h6">Subtotal: 0</Typography>
+                        <Typography variant="h6">
+                          Subtotal: {subTotal}
+                        </Typography>
                       </Grid>
                     </ListItem>
                     <ListItem>

@@ -12,8 +12,7 @@ import {
 } from "@material-ui/core";
 
 import { useStyles } from "../../utils/styles";
-import CartContext, { useCart } from "./../../components/cartContext";
-
+import CartContext from "./../../components/cartContext";
 
 export const getStaticPaths = async () => {
   const paths = data.map((x) => {
@@ -39,7 +38,7 @@ export default function ProductDetails({ product }) {
   const { cart, addToCart } = useContext(CartContext);
 
   const addToCartHandler = () => {
-    addToCart([...cart, product]);
+    addToCart(product);
   };
   return (
     <Slide key={product.name} direction="up" in={true}>
