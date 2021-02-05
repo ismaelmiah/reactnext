@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { getProducts } from "../../utils/data";
-import Layout from '../../components/Layout'
+import Layout from "../../components/Layout";
 import {
   Box,
   Button,
@@ -101,37 +101,31 @@ export default function Details(props) {
                     </Grid>
                   </Grid>
                 </ListItem>
-                {product[0].quantity > 0 && (
-                  <>
-                    <ListItem>
-                      <Grid container justify="flex-end">
-                        <Grid item xs={6}>
-                          Quantity
-                        </Grid>
-                        <Grid item xs={6}>
-                          <form noValidate autoComplete="off">
-                            <TextField
-                              id="standard-basic"
-                              fullWidth
-                              onChange={(e) => setQuantity(e.target.value)}
-                              value={quantity}
-                            />
-                          </form>
-                        </Grid>
-                      </Grid>
-                    </ListItem>
-                    <ListItem>
-                      <Button
-                        type="button"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        onClick={addToCartHandler}
-                      >
-                        Add to cart
-                      </Button>
-                    </ListItem>
-                  </>
+                {product[0].quantity === 0 ? (
+                  <ListItem>
+                    <Button
+                      type="button"
+                      disabled
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      onClick={addToCartHandler}
+                    >
+                      Add to cart
+                    </Button>
+                  </ListItem>
+                ) : (
+                  <ListItem>
+                    <Button
+                      type="button"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      onClick={addToCartHandler}
+                    >
+                      Add to cart
+                    </Button>
+                  </ListItem>
                 )}
               </List>
             </Card>

@@ -25,11 +25,11 @@ export default function Layout({ children, title = "E-Commerce" }) {
 
   useEffect(() => {
     setCart(
-      JSON.parse(localStorage.getItem("myCart"))?.length  > state.state.cart
+      JSON.parse(localStorage.getItem("myCart"))?.length > state.state.cart
         ? JSON.parse(localStorage.getItem("myCart"))
         : state.state.cart
     );
-    console.log('Cart Changes')
+    console.log("Cart Changes");
   }, [tempcart]);
 
   return (
