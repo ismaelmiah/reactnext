@@ -1,10 +1,8 @@
 import React, { createContext, useState, useContext } from "react";
 
-export const CartContext = createContext();
+const CartContext = createContext();
+export default CartContext;
 
-export function useCart() {
-  return useContext(CartContext);
-}
 export const CartProvider = (props) => {
   const [cart, setCart] = useState([]);
 
@@ -13,17 +11,8 @@ export const CartProvider = (props) => {
     setCart(products);
   };
 
-  const updateCartQty = ({ id, qty }) => {
-    let products = cart.map((product) => {
-      if (product.id == id) product.cart_qty = qty;
-      return product;
-    });
-    localStorage.setItem("cart", JSON.stringify(products));
-    setCart(products);
-  }
-
   return (
-    <CartContext.Provider value={{ cart, addToCart, updateCartQty }}>
+    <CartContext.Provider value={{ cart, addToCart }}>
       {props.children}
     </CartContext.Provider>
   );

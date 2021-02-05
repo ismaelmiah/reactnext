@@ -1,26 +1,21 @@
 import Head from "next/head";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import NextLink from "next/link";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
 import { theme } from "../utils/styles";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useStyles } from "../utils/styles";
 import { Badge } from "@material-ui/core";
-import { CartContext } from "../components/CartContext";
-import { CallMerge } from "@material-ui/icons";
-import { useCart } from "./cartContext";
+import  CartContext from "./cartContext";
 
 export const Layout = ({ children }) => {
   const classes = useStyles();
-  const { cart } = useCart();
-
+  const { cart } = useContext(CartContext);
   return (
     <React.Fragment>
       <Head>
@@ -55,11 +50,11 @@ export const Layout = ({ children }) => {
             </NextLink>
 
             <nav>
-              <NextLink href="/cart">
+              <NextLink href="/Cart">
                 <Link
                   variant="button"
                   color="textPrimary"
-                  href="/cart"
+                  href="/Cart"
                   className={classes.link}
                 >
                   {cart.length > 0 ? (

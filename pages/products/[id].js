@@ -1,5 +1,5 @@
 import data from "../../utils/data.json";
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Button,
@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 
 import { useStyles } from "../../utils/styles";
-import { useCart } from "./../../components/cartContext";
+import CartContext, { useCart } from "./../../components/cartContext";
 
 
 export const getStaticPaths = async () => {
@@ -36,7 +36,7 @@ export const getStaticProps = async (context) => {
 export default function ProductDetails({ product }) {
   const classes = useStyles();
 
-  const { cart, addToCart } = useCart();
+  const { cart, addToCart } = useContext(CartContext);
 
   const addToCartHandler = () => {
     addToCart([...cart, product]);

@@ -1,10 +1,8 @@
-import React, { useContext, useState, useEffect } from "react";
-import Layout from "../components/Layout";
+import React, { useEffect, useContext } from "react";
 
 import {
   Button,
   Card,
-  CircularProgress,
   Grid,
   List,
   ListItem,
@@ -20,43 +18,16 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useStyles } from "../utils/styles";
-import dynamic from "next/dynamic";
-import Link from "next/link";
-import Router from "next/router";
-import { useCart } from "../components/CartContext";
+import CartContext from "../components/cartContext";
 
-export default function CartPage(props) {
+const Cart = () => {
   const classes = useStyles();
-  const { cart, addToCart } = useCart();
 
-  //   const [cart, setCart] = useState([]);
-  //   //const [subTotal, setsubTotal] = useState([]);
-  //   const subTotal = cart.reduce(function (prev, cur) {
-  //     return prev + cur.price;
-  //   }, 0);
-  //   const removeFromCartHandler = async (lineItem) => {
-  //     RemoveCart(lineItem);
-  //   };
-  //   const quantityChangeHandler = async (lineItem, quantity) => {
-  //     const commerce = getCommerce(props.commercePublicKey);
-  //     const cartData = await commerce.cart.update(lineItem.id, {
-  //       quantity,
-  //     });
-  //     dispatch({ type: CART_RETRIEVE_SUCCESS, payload: cartData.cart });
-  //   };
-
-  //   useEffect(() => {
-  //     setCart(
-  //       JSON.parse(localStorage.getItem("myCart"))?.length > state.state.cart
-  //         ? JSON.parse(localStorage.getItem("myCart"))
-  //         : state.state.cart
-  //     );
-  //   }, []);
-
-  //   const proccessToCheckout = () => {
-  //     Router.push("/checkout");
-  //   };
-  console.log("Shopping Cart - ", subTotal);
+  const { cart } = useContext(CartContext);
+  
+  const proccessToCheckout = () => {
+    Router.push("/checkout");
+  };
   return (
     <React.Fragment>
       <Typography variant="h1" component="h1">
@@ -121,7 +92,7 @@ export default function CartPage(props) {
               <List>
                 <ListItem>
                   <Grid container>
-                    <Typography variant="h6">Subtotal: {subTotal}</Typography>
+                    <Typography variant="h6">Subtotal: 0</Typography>
                   </Grid>
                 </ListItem>
                 <ListItem>
@@ -144,4 +115,6 @@ export default function CartPage(props) {
       </Slide>
     </React.Fragment>
   );
-}
+};
+
+export default Cart;
