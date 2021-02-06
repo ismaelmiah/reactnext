@@ -54,7 +54,7 @@ const orders = ({ orders }) => {
                       <TableBody>
                         {orders.map((order) => (
                           <TableRow
-                            key={order.id}
+                            key={order.date}
                             hover
                             style={{ cursor: "pointer" }}
                             onClick={() => {

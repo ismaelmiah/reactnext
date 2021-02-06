@@ -27,7 +27,7 @@ const Cart = () => {
 
   let subTotal = 0;
   for (let key in cart) {
-    subTotal += cart[key].price * cart[key].quantity;
+    subTotal += cart[key].price * cart[key].cartquantity;
   }
 
   return (

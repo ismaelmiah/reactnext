@@ -41,7 +41,7 @@ const Checkout = () => {
 
   let subTotal = 0;
   for (let key in cart) {
-    subTotal += cart[key].price * cart[key].quantity;
+    subTotal += cart[key].price * cart[key].cartquantity;
   }
 
   const [CheckoutForm, setCheckoutForm] = useState({
@@ -84,6 +84,7 @@ const Checkout = () => {
         }).then((res, data) => {
           if (res.status == 200) {
             setCart([]);
+            localStorage.clear();
             res.json().then((data) => router.push(`/orders/${data.id}`));
           }
         });
