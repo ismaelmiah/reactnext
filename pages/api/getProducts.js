@@ -3,16 +3,23 @@ var fs = require("fs");
 export default (req, res) => {
   if (req.method === "POST") {
     const cartData = JSON.parse(req.body);
+
     fs.readFile("utils/data.json", "utf8", (err, data) => {
-      let products = JSON.parse(data).map((x) => {
-        cartData.map((c) => {
-          if (c.id == x.id) {
-            x.quantity -= c.quantity;
+      const Data = JSON.parse(data);
+
+      let products = Data.map((x) => {
+        for (let i = 0; i < cartData.length; i++) {
+          if (cartData[i].id === x.id) {
+            x.quantity -= cartData[i].cartquantity;
             return x;
           } else return x;
-        });
+        }
       });
-      fs.writeFile("utils/data.json", JSON.stringify(products));
+
+      fs.writeFile("utils/data.json", JSON.stringify(products), (err) => {
+        if (err) throw err;
+        console.log("The file has been saved!");
+      });
     });
     res.status(201).json({});
   } else {

@@ -94,7 +94,9 @@ export default function ProductDetails({ product }) {
                       Status
                     </Grid>
                     <Grid item xs={6}>
-                      {product.quantity > 0 ? "In Stock" : "Unavailable"}
+                      {product.quantity > 0
+                        ? `In Stock: ${product.quantity}`
+                        : "Unavailable"}
                     </Grid>
                   </Grid>
                 </ListItem>

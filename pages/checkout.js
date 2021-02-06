@@ -36,14 +36,14 @@ const useStyles = makeStyles((theme) => ({
 const Checkout = () => {
   const classes = useStyles();
 
-  const { cart } = useContext(CartContext);
+  const { cart, setCart } = useContext(CartContext);
 
   let subTotal = 0;
   for (let key in cart) {
     subTotal += cart[key].price * cart[key].quantity;
   }
 
-  const [ CheckoutForm, setCheckoutForm ] = useState({
+  const [CheckoutForm, setCheckoutForm] = useState({
     Name: null,
     Mobile: null,
     Address: null,
@@ -61,52 +61,28 @@ const Checkout = () => {
       return { ...prev, Mobile: e };
     });
   };
-  
+
   const addressSet = (e) => {
     setCheckoutForm((prev) => {
       return { ...prev, Address: e };
     });
   };
-  
+
   const zipSet = (e) => {
     setCheckoutForm((prev) => {
       return { ...prev, ZipCode: e };
     });
   };
-  
+
   const formSubmit = () => {
-    fetch("http://localhost:3000/api/products", {
+    fetch("http://localhost:3000/api/getProducts", {
       method: "POST",
       body: JSON.stringify(cart),
-    })
-      .then((res) => {
-        if (res.status == 201) {
-          fetch("http://localhost:3000/api/order", {
-            method: "POST",
-            body: JSON.stringify({
-              user: form,
-              orders: cart,
-            }),
-          })
-            .then((res) => {
-              if (res.status == 201) {
-                setCompleted(true);
-                addToCart([]);
-                res.json().then((data) => router.push(`/orders/${data.id}`));
-              } else {
-                alert("Network Error!");
-              }
-            })
-            .catch((err) => {
-              alert(err);
-            });
-        } else {
-          alert("Network Error!");
-        }
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    }).then((res) => {
+      if (res.status) {
+        setCart([]);
+      }
+    });
   };
 
   return (
@@ -182,7 +158,7 @@ const Checkout = () => {
                                   {cartItem.name}
                                 </TableCell>
                                 <TableCell align="right">
-                                  {cartItem.quantity}
+                                  {cartItem.cartquantity}
                                 </TableCell>
                                 <TableCell align="right">
                                   {cartItem.price}

@@ -14,7 +14,17 @@ import data from "../utils/data.json";
 
 import { Layout } from "../components/Layout";
 
+export const getStaticProps = async (context) => {
+  return {
+    props: {
+      products: data,
+    },
+  };
+};
+
 export default function Home({ products }) {
+  console.log("Products = ", products);
+
   return (
     <Layout>
       <Grid container spacing={1}>
@@ -58,11 +68,3 @@ export default function Home({ products }) {
     </Layout>
   );
 }
-
-export const getStaticProps = async (context) => {
-  return {
-    props: {
-      products: data,
-    },
-  };
-};
