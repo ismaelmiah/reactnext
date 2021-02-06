@@ -67,14 +67,14 @@ export const Layout = ({ children, title="Home" }) => {
               </NextLink>
             </nav>
             <nav>
-              <NextLink href="/order">
+              <NextLink href="/orders">
                 <Link
                   variant="button"
                   color="textPrimary"
-                  href="/order"
+                  href="/orders"
                   className={classes.link}
                 >
-                  My Order
+                  My Orders
                 </Link>
               </NextLink>
             </nav>
