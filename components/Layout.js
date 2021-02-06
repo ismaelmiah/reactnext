@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -15,7 +15,13 @@ import  CartContext from "./cartContext";
 
 export const Layout = ({ children }) => {
   const classes = useStyles();
-  const { cart } = useContext(CartContext);
+  const { cart, setCart } = useContext(CartContext);
+  
+  // useEffect(() => {
+  //   console.log("CartContextLayout - ", cart);
+  //   return () => setCart(JSON.parse(localStorage.getItem("mycart")));
+  // }, []);
+
   return (
     <React.Fragment>
       <Head>
@@ -50,11 +56,11 @@ export const Layout = ({ children }) => {
             </NextLink>
 
             <nav>
-              <NextLink href="/Cart">
+              <NextLink href="/cart">
                 <Link
                   variant="button"
                   color="textPrimary"
-                  href="/Cart"
+                  href="/cart"
                   className={classes.link}
                 >
                   {cart.length > 0 ? (

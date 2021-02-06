@@ -6,8 +6,6 @@ import {
   Grid,
   List,
   ListItem,
-  MenuItem,
-  Select,
   Slide,
   Table,
   TableBody,
@@ -20,27 +18,31 @@ import {
 import { useStyles } from "../utils/styles";
 import CartContext from "../components/cartContext";
 import Router from "next/router";
+import { Layout } from "../components/Layout";
 
 const Cart = () => {
   const classes = useStyles();
 
-  const { cart, UpdateCart } = useContext(CartContext);
+  const { cart, setCart, IncreastQuantity, DecreaseQuantity } = useContext(
+    CartContext
+  );
+
 
   let subTotal = 0;
-  console.log('Cart - ', cart)
+  console.log("Cart - ", cart);
 
   for (let key in cart) {
     subTotal += cart[key].price;
   }
 
   const quantityChangeHandler = (product, newQuantity) => {
-    console.log(product.id, newQuantity)
+    console.log(product.id, newQuantity);
     UpdateCart(product.id, newQuantity);
-    console.log('Updated Cart ', cart)
+    console.log("Updated Cart ", cart);
   };
 
   return (
-    <React.Fragment>
+    <Layout>
       {cart.length == 0 ? (
         <Typography variant="h1" align="center" component="h1">
           Your Cart is Empty
@@ -71,30 +73,21 @@ const Cart = () => {
                               {cartItem.name}
                             </TableCell>
                             <TableCell align="right">
-                              <Select
-                                labelId="quanitity-label"
-                                id="quanitity"
-                                onChange={(e) =>
-                                  quantityChangeHandler(
-                                    cartItem,
-                                    e.target.value
-                                  )
-                                }
-                                value={cartItem.quantity}
+                              <button
+                                onClick={() => DecreaseQuantity(cartItem.id)}
                               >
-                                {[...Array(cartItem.quantity).keys()].map(
-                                  (x) => (
-                                    <MenuItem key={x + 1} value={x + 1}>
-                                      {x + 1}
-                                    </MenuItem>
-                                  )
-                                )}
-                              </Select>
+                                -
+                              </button>
+                              <span>{cartItem.quantity}</span>
+                              <button
+                                onClick={() => IncreastQuantity(cartItem.id)}
+                              >
+                                +
+                              </button>
                             </TableCell>
                             <TableCell align="right">
                               {cartItem.price}
                             </TableCell>
-
                             <TableCell align="right">
                               <Button
                                 onClick={() => removeFromCartHandler(cartItem)}
@@ -141,7 +134,7 @@ const Cart = () => {
           </Slide>
         </div>
       )}
-    </React.Fragment>
+    </Layout>
   );
 };
 

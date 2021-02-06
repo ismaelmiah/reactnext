@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
 export default CartContext;
@@ -7,7 +7,6 @@ export const CartProvider = (props) => {
   const [cart, setCart] = useState([]);
 
   const addToCart = (product) => {
-    //console.log("Products - ", products);
     const updatedCart = [...cart];
     const updatedItemIndex = updatedCart.findIndex(
       (item) => item.id === product.id
@@ -20,25 +19,50 @@ export const CartProvider = (props) => {
       };
       updatedItem.quantity++;
       updatedCart[updatedItemIndex] = updatedItem;
-      
     }
 
     localStorage.setItem("mycart", JSON.stringify(updatedCart));
     setCart(updatedCart);
   };
 
-  
-  const UpdateCart = ({id,qty}) => {
-    let products = cart.map(product=>{
-        if(product.id==id) product.cart_qty = qty
-        return product
-    })
-    localStorage.setItem("mycart",JSON.stringify(products))
-    setCart(products)
-}
+  const IncreastQuantity = (id) => {
+    alert(id);
+    // const updatedCart = [...cart];
+
+    //   const updatedItem = {
+    //     ...updatedCart[id],
+    //   };
+    //   updatedItem.quantity++;
+    //   updatedCart[id] = updatedItem;
+
+    // localStorage.setItem("mycart", JSON.stringify(updatedCart));
+    // setCart(updatedCart);
+  };
+
+  const DecreaseQuantity = (id) => {
+    const updatedCart = [...cart];
+
+    const updatedItem = {
+      ...updatedCart[id],
+    };
+    updatedItem.quantity === 1
+      ? (updatedItem.quantity = 1)
+      : (updatedItem.quantity -= 1);
+    updatedCart[id] = updatedItem;
+
+    localStorage.setItem("mycart", JSON.stringify(updatedCart));
+    setCart(updatedCart);
+  };
+
+  useEffect(() => {
+    console.log("CartContext - ", cart);
+    setCart(JSON.parse(localStorage.getItem("mycart")));
+  }, []);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, UpdateCart }}>
+    <CartContext.Provider
+      value={{ cart, setCart, addToCart, IncreastQuantity, DecreaseQuantity }}
+    >
       {props.children}
     </CartContext.Provider>
   );

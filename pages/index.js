@@ -12,46 +12,50 @@ import {
 } from "@material-ui/core";
 import data from "../utils/data.json";
 
+import { Layout } from "../components/Layout";
+
 export default function Home({ products }) {
   return (
-    <Grid container spacing={1}>
-      {products.map((product) => (
-        <Slide key={product.id} direction="up" in={true}>
-          <Grid item md={3}>
-            <Card>
-              <Link href={`/products/${product.id}`}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    alt={product.name}
-                    image={`/images/${product.id}.jpg`}
-                  />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="body2"
-                      color="textPrimary"
-                      component="p"
-                    >
-                      {product.name}
-                    </Typography>
-                    <Box>
+    <Layout>
+      <Grid container spacing={1}>
+        {products.map((product) => (
+          <Slide key={product.id} direction="up" in={true}>
+            <Grid item md={3}>
+              <Card>
+                <Link href={`/products/${product.id}`}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      alt={product.name}
+                      image={`/images/${product.id}.jpg`}
+                    />
+                    <CardContent>
                       <Typography
-                        variant="body1"
+                        gutterBottom
+                        variant="body2"
                         color="textPrimary"
                         component="p"
                       >
-                        $ {product.price}
+                        {product.name}
                       </Typography>
-                    </Box>
-                  </CardContent>
-                </CardActionArea>
-              </Link>
-            </Card>
-          </Grid>
-        </Slide>
-      ))}
-    </Grid>
+                      <Box>
+                        <Typography
+                          variant="body1"
+                          color="textPrimary"
+                          component="p"
+                        >
+                          $ {product.price}
+                        </Typography>
+                      </Box>
+                    </CardContent>
+                  </CardActionArea>
+                </Link>
+              </Card>
+            </Grid>
+          </Slide>
+        ))}
+      </Grid>
+    </Layout>
   );
 }
 

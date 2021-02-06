@@ -13,9 +13,7 @@ export default function MyApp({ pageProps, Component }) {
 
   return (
     <CartProvider>
-      <Layout>
         <Component {...pageProps} />
-      </Layout>
     </CartProvider>
   );
 }

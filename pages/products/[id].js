@@ -5,6 +5,8 @@ import {
   Button,
   Card,
   Grid,
+  MenuItem,
+  Select,
   List,
   ListItem,
   Slide,
@@ -13,6 +15,8 @@ import {
 
 import { useStyles } from "../../utils/styles";
 import CartContext from "./../../components/cartContext";
+
+import { Layout } from "../../components/Layout";
 
 export const getStaticPaths = async () => {
   const paths = data.map((x) => {
@@ -41,88 +45,89 @@ export default function ProductDetails({ product }) {
     addToCart(product);
   };
   return (
-    <Slide key={product.name} direction="up" in={true}>
-      <Grid container spacing={1}>
-        <Grid item md={6}>
-          <img
-            alt={product.name}
-            src={`/images/${product.id}.jpg`}
-            className={classes.largeImage}
-          />
-        </Grid>
-        <Grid item md={3} xs={12}>
-          <List>
-            <ListItem>
-              <Typography
-                gutterBottom
-                variant="h6"
-                color="textPrimary"
-                component="h1"
-              >
-                {product.name}
-              </Typography>
-            </ListItem>
-            <ListItem>
-              <Box
-                dangerouslySetInnerHTML={{ __html: product.description }}
-              ></Box>
-            </ListItem>
-          </List>
-        </Grid>
-        <Grid item md={3} xs={12}>
-          <Card>
+    <Layout>
+      <Slide key={product.name} direction="up" in={true}>
+        <Grid container spacing={1}>
+          <Grid item md={6}>
+            <img
+              alt={product.name}
+              src={`/images/${product.id}.jpg`}
+              className={classes.largeImage}
+            />
+          </Grid>
+          <Grid item md={3} xs={12}>
             <List>
               <ListItem>
-                <Grid container>
-                  <Grid item xs={6}>
-                    Price
-                  </Grid>
-                  <Grid item xs={6}>
-                    {product.price}
-                  </Grid>
-                </Grid>
+                <Typography
+                  gutterBottom
+                  variant="h6"
+                  color="textPrimary"
+                  component="h1"
+                >
+                  {product.name}
+                </Typography>
               </ListItem>
-
               <ListItem>
-                <Grid alignItems="center" container>
-                  <Grid item xs={6}>
-                    Status
-                  </Grid>
-                  <Grid item xs={6}>
-                    {product.quantity > 0 ? "In Stock" : "Unavailable"}
-                  </Grid>
-                </Grid>
+                <Box
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                ></Box>
               </ListItem>
-              {product.quantity === 0 ? (
-                <ListItem>
-                  <Button
-                    type="button"
-                    disabled
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={addToCartHandler}
-                  >
-                    Add to cart
-                  </Button>
-                </ListItem>
-              ) : (
-                <ListItem>
-                  <Button
-                    type="button"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    onClick={addToCartHandler}
-                  >
-                    Add to cart
-                  </Button>
-                </ListItem>
-              )}
             </List>
-          </Card>
+          </Grid>
+          <Grid item md={3} xs={12}>
+            <Card>
+              <List>
+                <ListItem>
+                  <Grid container>
+                    <Grid item xs={6}>
+                      Price
+                    </Grid>
+                    <Grid item xs={6}>
+                      {product.price}
+                    </Grid>
+                  </Grid>
+                </ListItem>
+
+                <ListItem>
+                  <Grid alignItems="center" container>
+                    <Grid item xs={6}>
+                      Status
+                    </Grid>
+                    <Grid item xs={6}>
+                      {product.quantity > 0 ? "In Stock" : "Unavailable"}
+                    </Grid>
+                  </Grid>
+                </ListItem>
+
+                <ListItem>
+                  {product.quantity > 0 ? (
+                    <Button
+                      type="button"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      onClick={addToCartHandler}
+                    >
+                      Add to cart
+                    </Button>
+                  ) : (
+                    <Button
+                      type="button"
+                      fullWidth
+                      disabled
+                      variant="contained"
+                      color="primary"
+                      onClick={addToCartHandler}
+                    >
+                      Add to cart
+                    </Button>
+                  )}
+                </ListItem>
+              </List>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </Slide>
+      </Slide>
+    </Layout>
   );
 }
