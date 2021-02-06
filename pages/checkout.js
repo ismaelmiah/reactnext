@@ -13,7 +13,7 @@ import {
   TableRow,
   Typography,
 } from "@material-ui/core";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import CartContext from "../components/cartContext";
 
 const useStyles = makeStyles((theme) => ({
@@ -36,14 +36,78 @@ const useStyles = makeStyles((theme) => ({
 const Checkout = () => {
   const classes = useStyles();
 
-  const { cart, removeCart, IncreastQuantity, DecreaseQuantity } = useContext(
-    CartContext
-  );
+  const { cart } = useContext(CartContext);
 
   let subTotal = 0;
   for (let key in cart) {
     subTotal += cart[key].price * cart[key].quantity;
   }
+
+  const [ CheckoutForm, setCheckoutForm ] = useState({
+    Name: null,
+    Mobile: null,
+    Address: null,
+    ZipCode: null,
+  });
+
+  const nameSet = (e) => {
+    setCheckoutForm((prev) => {
+      return { ...prev, Name: e };
+    });
+  };
+
+  const mobileSet = (e) => {
+    setCheckoutForm((prev) => {
+      return { ...prev, Mobile: e };
+    });
+  };
+  
+  const addressSet = (e) => {
+    setCheckoutForm((prev) => {
+      return { ...prev, Address: e };
+    });
+  };
+  
+  const zipSet = (e) => {
+    setCheckoutForm((prev) => {
+      return { ...prev, ZipCode: e };
+    });
+  };
+  
+  const formSubmit = () => {
+    fetch("http://localhost:3000/api/products", {
+      method: "POST",
+      body: JSON.stringify(cart),
+    })
+      .then((res) => {
+        if (res.status == 201) {
+          fetch("http://localhost:3000/api/order", {
+            method: "POST",
+            body: JSON.stringify({
+              user: form,
+              orders: cart,
+            }),
+          })
+            .then((res) => {
+              if (res.status == 201) {
+                setCompleted(true);
+                addToCart([]);
+                res.json().then((data) => router.push(`/orders/${data.id}`));
+              } else {
+                alert("Network Error!");
+              }
+            })
+            .catch((err) => {
+              alert(err);
+            });
+        } else {
+          alert("Network Error!");
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
 
   return (
     <Layout title="Checkout">
@@ -58,23 +122,37 @@ const Checkout = () => {
               <Paper className={classes.paper}>
                 <form className={classes.form} noValidate autoComplete="off">
                   <div>
-                    <TextField id="standard-error" label="Name" />
+                    <TextField
+                      id="standard-error"
+                      label="Name"
+                      onChange={(e) => nameSet(e.target.value)}
+                    />
                   </div>
                   <div>
-                    <TextField id="standard-error" label="Mobile" />
+                    <TextField
+                      id="standard-error"
+                      label="Mobile"
+                      onChange={(e) => mobileSet(e.target.value)}
+                    />
                   </div>
                   <div>
-                    <TextField id="standard-error" label="Address" />
+                    <TextField
+                      id="standard-error"
+                      label="Address"
+                      onChange={(e) => addressSet(e.target.value)}
+                    />
                   </div>
                   <div>
-                    <TextField id="standard-error" label="Zip Code" />
+                    <TextField
+                      id="standard-error"
+                      label="Zip Code"
+                      onChange={(e) => zipSet(e.target.value)}
+                    />
                   </div>
                   <div style={{ margin: "20px 0px 10px 0px" }}>
                     <Button
                       variant="contained"
-                      onClick={() => {
-                        alert("Confrim");
-                      }}
+                      onClick={() => formSubmit()}
                       color="primary"
                     >
                       Confirm Order
@@ -95,7 +173,6 @@ const Checkout = () => {
                               <TableCell>Name</TableCell>
                               <TableCell align="right">Quantity</TableCell>
                               <TableCell align="right">Price</TableCell>
-                              <TableCell align="right">Action</TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -109,15 +186,6 @@ const Checkout = () => {
                                 </TableCell>
                                 <TableCell align="right">
                                   {cartItem.price}
-                                </TableCell>
-                                <TableCell align="right">
-                                  <Button
-                                    onClick={() => removeCart(index)}
-                                    variant="contained"
-                                    color="secondary"
-                                  >
-                                    x
-                                  </Button>
                                 </TableCell>
                               </TableRow>
                             ))}
