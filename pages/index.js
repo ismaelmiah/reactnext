@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import Link from "next/link";
 import {
   Box,
@@ -10,49 +10,59 @@ import {
   CardMedia,
   Typography,
 } from "@material-ui/core";
-import { Store } from "../components/Store";
+import data from "../utils/data.json";
 
-export default function Home(props) {
-  const { state, AddToCart } = useContext(Store);
-  const products = state.state.products;
-    return (
-    <Grid container spacing={1}>
-      {products.map((product) => (
-        <Slide key={product.id} direction="up" in={true}>
-          <Grid item md={3}>
-            <Card>
-              <Link href={`/products/${product.id}`}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    alt={product.name}
-                    image={`/images/${product.id}.jpg`}
-                  />
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      variant="body2"
-                      color="textPrimary"
-                      component="p"
-                    >
-                      {product.name}
-                    </Typography>
-                    <Box>
+import { Layout } from "../components/Layout";
+
+export default function Home({ products }) {
+  return (
+    <Layout>
+      <Grid container spacing={1}>
+        {products.map((product) => (
+          <Slide key={product.id} direction="up" in={true}>
+            <Grid item md={3}>
+              <Card>
+                <Link href={`/products/${product.id}`}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      alt={product.name}
+                      image={`/images/${product.id}.jpg`}
+                    />
+                    <CardContent>
                       <Typography
-                        variant="body1"
+                        gutterBottom
+                        variant="body2"
                         color="textPrimary"
                         component="p"
                       >
-                        $ {product.price}
+                        {product.name}
                       </Typography>
-                    </Box>
-                  </CardContent>
-                </CardActionArea>
-              </Link>
-            </Card>
-          </Grid>
-        </Slide>
-      ))}
-    </Grid>
+                      <Box>
+                        <Typography
+                          variant="body1"
+                          color="textPrimary"
+                          component="p"
+                        >
+                          $ {product.price}
+                        </Typography>
+                      </Box>
+                    </CardContent>
+                  </CardActionArea>
+                </Link>
+              </Card>
+            </Grid>
+          </Slide>
+        ))}
+      </Grid>
+    </Layout>
   );
 }
+
+export const getStaticProps = async (context) => {
+  return {
+    props: {
+      products: data,
+    },
+  };
+};

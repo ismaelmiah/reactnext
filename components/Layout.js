@@ -1,42 +1,32 @@
 import Head from "next/head";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import NextLink from "next/link";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
 import { theme } from "../utils/styles";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useStyles } from "../utils/styles";
-import { Badge, CircularProgress } from "@material-ui/core";
-import { Store } from "../components/Store";
+import { Badge } from "@material-ui/core";
+import  CartContext from "./cartContext";
 
-export default function Layout({ children, title = "E-Commerce" }) {
+export const Layout = ({ children }) => {
   const classes = useStyles();
-
-  const { state, AddToCart } = useContext(Store);
-  const [cart, setCart] = useState(state.state.cart);
-  ///// console.log(cart);
-  useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem("myCart"));
-    setCart((prev) => {
-      return {
-        ...prev,
-        cart: localData,
-      };
-    });
-  }, []);
-
+  const { cart, setCart } = useContext(CartContext);
   
+  // useEffect(() => {
+  //   console.log("CartContextLayout - ", cart);
+  //   return () => setCart(JSON.parse(localStorage.getItem("mycart")));
+  // }, []);
+
   return (
     <React.Fragment>
       <Head>
         <meta charSet="utf-8" />
-        <title>{`${title} - E-commerce`}</title>
+        <title>E-commerce</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"
@@ -85,22 +75,11 @@ export default function Layout({ children, title = "E-Commerce" }) {
             </nav>
           </Toolbar>
         </AppBar>
-        {/* Hero unit */}
+
         <Container component="main" className={classes.main}>
           {children}
         </Container>
-        {/* End hero unit */}
-        <Container maxWidth="md" component="footer">
-          <Box mt={5}>
-            <Typography variant="body2" color="textSecondary" align="center">
-              {"© Ecommerce"}
-              2021
-              {"."}
-            </Typography>
-          </Box>
-        </Container>
-        {/* End footer */}
       </ThemeProvider>
     </React.Fragment>
   );
-}
+};

@@ -1,23 +1,25 @@
-import React,  { useContext, useState } from 'react';
-import { getProducts } from "../../utils/data";
+import data from "../../utils/data.json";
+import React, { useContext } from "react";
 import {
   Box,
   Button,
   Card,
   Grid,
+  MenuItem,
+  Select,
   List,
   ListItem,
-  TextField,
   Slide,
   Typography,
 } from "@material-ui/core";
 
 import { useStyles } from "../../utils/styles";
-import { Store } from '../../components/Store';
+import CartContext from "./../../components/cartContext";
+
+import { Layout } from "../../components/Layout";
 
 export const getStaticPaths = async () => {
-  
-  const paths = getProducts.map((x) => {
+  const paths = data.map((x) => {
     return { params: { id: x.id.toString() } };
   });
   return {
@@ -28,98 +30,77 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const id = parseInt(context.params.id);
-  const product = getProducts.filter((x) => x.id === id);
+  let product = data.filter((x) => x.id === id)[0];
   return {
     props: { product },
   };
 };
 
-export default function Details(props) {
+export default function ProductDetails({ product }) {
   const classes = useStyles();
 
-  const [quantity, setQuantity] = useState(1);
-  const { product } = props;
-  
-  const { state, addToCart, dispatch } = useContext(Store);
-  //const { cart } = state;
-  
-  const addToCartHandler = () => {
-    addToCart(product)
-  };
+  const { cart, addToCart } = useContext(CartContext);
 
+  const addToCartHandler = () => {
+    addToCart(product);
+  };
   return (
-    <Slide key={product[0].name} direction="up" in={true}>
-      <Grid container spacing={1}>
-        <Grid item md={6}>
-          <img
-            alt={product[0].name}
-            src={`/images/${product[0].id}.jpg`}
-            className={classes.largeImage}
-          />
-        </Grid>
-        <Grid item md={3} xs={12}>
-          <List>
-            <ListItem>
-              <Typography
-                gutterBottom
-                variant="h6"
-                color="textPrimary"
-                component="h1"
-              >
-                {product[0].name}
-              </Typography>
-            </ListItem>
-            <ListItem>
-              <Box
-                dangerouslySetInnerHTML={{ __html: product[0].description }}
-              ></Box>
-            </ListItem>
-          </List>
-        </Grid>
-        <Grid item md={3} xs={12}>
-          <Card>
+    <Layout>
+      <Slide key={product.name} direction="up" in={true}>
+        <Grid container spacing={1}>
+          <Grid item md={6}>
+            <img
+              alt={product.name}
+              src={`/images/${product.id}.jpg`}
+              className={classes.largeImage}
+            />
+          </Grid>
+          <Grid item md={3} xs={12}>
             <List>
               <ListItem>
-                <Grid container>
-                  <Grid item xs={6}>
-                    Price
-                  </Grid>
-                  <Grid item xs={6}>
-                    {product[0].price}
-                  </Grid>
-                </Grid>
+                <Typography
+                  gutterBottom
+                  variant="h6"
+                  color="textPrimary"
+                  component="h1"
+                >
+                  {product.name}
+                </Typography>
               </ListItem>
-
               <ListItem>
-                <Grid alignItems="center" container>
-                  <Grid item xs={6}>
-                    Status
-                  </Grid>
-                  <Grid item xs={6}>
-                    {product[0].quantity > 0 ? "In Stock" : "Unavailable"}
-                  </Grid>
-                </Grid>
+                <Box
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                ></Box>
               </ListItem>
-              {product[0].quantity > 0 && (
-                <>
-                  <ListItem>
-                    <Grid container justify="flex-end">
-                      <Grid item xs={6}>
-                        Quantity
-                      </Grid>
-                      <Grid item xs={6}>
-                        <form noValidate autoComplete="off">
-                          <TextField
-                            id="standard-basic"
-                            fullWidth
-                            onChange={(e) => setQuantity(e.target.value)}
-                            value={quantity}
-                          />
-                        </form>
-                      </Grid>
+            </List>
+          </Grid>
+          <Grid item md={3} xs={12}>
+            <Card>
+              <List>
+                <ListItem>
+                  <Grid container>
+                    <Grid item xs={6}>
+                      Price
                     </Grid>
-                  </ListItem>
-                  <ListItem>
+                    <Grid item xs={6}>
+                      {product.price}
+                    </Grid>
+                  </Grid>
+                </ListItem>
+
+                <ListItem>
+                  <Grid alignItems="center" container>
+                    <Grid item xs={6}>
+                      Status
+                    </Grid>
+                    <Grid item xs={6}>
+                      {product.quantity > 0 ? "In Stock" : "Unavailable"}
+                    </Grid>
+                  </Grid>
+                </ListItem>
+
+                <ListItem>
+                  {product.quantity > 0 ? (
                     <Button
                       type="button"
                       fullWidth
@@ -129,13 +110,24 @@ export default function Details(props) {
                     >
                       Add to cart
                     </Button>
-                  </ListItem>
-                </>
-              )}
-            </List>
-          </Card>
+                  ) : (
+                    <Button
+                      type="button"
+                      fullWidth
+                      disabled
+                      variant="contained"
+                      color="primary"
+                      onClick={addToCartHandler}
+                    >
+                      Add to cart
+                    </Button>
+                  )}
+                </ListItem>
+              </List>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-    </Slide>
+      </Slide>
+    </Layout>
   );
 }
