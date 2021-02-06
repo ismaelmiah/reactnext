@@ -14,7 +14,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useContext, useState } from "react";
-import CartContext from "../components/cartContext";
+import CartContext from "./context/cartContext";
 import router from "next/router";
 
 const useStyles = makeStyles((theme) => ({

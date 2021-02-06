@@ -1,8 +1,5 @@
 import React from "react";
-import DeleteIcon from "@material-ui/icons/Delete";
-import InfoIcon from "@material-ui/icons/Info";
 import {
-  Button,
   Grid,
   Slide,
   Table,
@@ -26,9 +23,6 @@ export const getStaticProps = async () => {
   };
 };
 
-const removeOrder = (orderId) => {
-  alert(orderId);
-};
 
 const orders = ({ orders }) => {
   return (
