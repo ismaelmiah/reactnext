@@ -23,16 +23,15 @@ import { Layout } from "../components/Layout";
 const Cart = () => {
   const classes = useStyles();
 
-  const { cart, setCart, IncreastQuantity, DecreaseQuantity } = useContext(
+  const { cart, removeCart, IncreastQuantity, DecreaseQuantity } = useContext(
     CartContext
   );
-
 
   let subTotal = 0;
   console.log("Cart - ", cart);
 
   for (let key in cart) {
-    subTotal += cart[key].price;
+    subTotal += (cart[key].price * cart[key].quantity);
   }
 
   const quantityChangeHandler = (product, newQuantity) => {
@@ -67,30 +66,38 @@ const Cart = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {cart.map((cartItem) => (
+                        {cart.map((cartItem, index) => (
                           <TableRow key={cartItem.name}>
                             <TableCell component="th" scope="row">
                               {cartItem.name}
                             </TableCell>
                             <TableCell align="right">
-                              <button
-                                onClick={() => DecreaseQuantity(cartItem.id)}
+                              <Button
+                                onClick={() => DecreaseQuantity(index)}
+                                variant="contained"
+                                size="small"
+                                color="secondary"
                               >
                                 -
-                              </button>
-                              <span>{cartItem.quantity}</span>
-                              <button
-                                onClick={() => IncreastQuantity(cartItem.id)}
+                              </Button>
+                              <span style={{ margin: "0px 10px" }}>
+                                {cartItem.quantity}
+                              </span>
+                              <Button
+                                onClick={() => IncreastQuantity(index)}
+                                variant="contained"
+                                size="small"
+                                color="primary"
                               >
                                 +
-                              </button>
+                              </Button>
                             </TableCell>
                             <TableCell align="right">
                               {cartItem.price}
                             </TableCell>
                             <TableCell align="right">
                               <Button
-                                onClick={() => removeFromCartHandler(cartItem)}
+                                onClick={() => removeCart(index)}
                                 variant="contained"
                                 color="secondary"
                               >

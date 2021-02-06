@@ -25,18 +25,29 @@ export const CartProvider = (props) => {
     setCart(updatedCart);
   };
 
+  const removeCart = (id) => {
+    const updatedCart = [...cart.filter((item, index) => index !== id)];
+
+    // updatedCart.forEach((item, index) => {
+    //   if (item.id === id) {
+    //     cart.splice(index, 1);
+    //   }
+    // });
+
+    localStorage.setItem("mycart", JSON.stringify(updatedCart));
+    setCart(updatedCart);
+  };
+
   const IncreastQuantity = (id) => {
-    alert(id);
-    // const updatedCart = [...cart];
+    const updatedCart = [...cart];
 
-    //   const updatedItem = {
-    //     ...updatedCart[id],
-    //   };
-    //   updatedItem.quantity++;
-    //   updatedCart[id] = updatedItem;
-
-    // localStorage.setItem("mycart", JSON.stringify(updatedCart));
-    // setCart(updatedCart);
+    const updatedItem = {
+      ...updatedCart[id],
+    };
+    updatedItem.quantity++;
+    updatedCart[id] = updatedItem;
+    localStorage.setItem("mycart", JSON.stringify(updatedCart));
+    setCart(updatedCart);
   };
 
   const DecreaseQuantity = (id) => {
@@ -55,13 +66,21 @@ export const CartProvider = (props) => {
   };
 
   useEffect(() => {
-    console.log("CartContext - ", cart);
-    setCart(JSON.parse(localStorage.getItem("mycart")));
+    if(JSON.parse(localStorage.getItem("mycart"))){
+      setCart(JSON.parse(localStorage.getItem("mycart")));
+    }
   }, []);
 
   return (
     <CartContext.Provider
-      value={{ cart, setCart, addToCart, IncreastQuantity, DecreaseQuantity }}
+      value={{
+        cart,
+        setCart,
+        addToCart,
+        removeCart,
+        IncreastQuantity,
+        DecreaseQuantity,
+      }}
     >
       {props.children}
     </CartContext.Provider>
