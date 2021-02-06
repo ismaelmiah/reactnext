@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import CartContext from "../components/cartContext";
-import router from 'next/router'
+import router from "next/router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,7 +48,6 @@ const Checkout = () => {
     Name: null,
     Mobile: null,
     Address: null,
-    ZipCode: null,
   });
 
   const nameSet = (e) => {
@@ -69,11 +68,6 @@ const Checkout = () => {
     });
   };
 
-  const zipSet = (e) => {
-    setCheckoutForm((prev) => {
-      return { ...prev, ZipCode: e };
-    });
-  };
 
   const formSubmit = () => {
     fetch("http://localhost:3000/api/getProducts", {
@@ -128,13 +122,6 @@ const Checkout = () => {
                       id="standard-error"
                       label="Address"
                       onChange={(e) => addressSet(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <TextField
-                      id="standard-error"
-                      label="Zip Code"
-                      onChange={(e) => zipSet(e.target.value)}
                     />
                   </div>
                   <div style={{ margin: "20px 0px 10px 0px" }}>

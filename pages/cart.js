@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-
 import {
   Button,
   Card,
@@ -22,7 +21,6 @@ import { Layout } from "../components/Layout";
 
 const Cart = () => {
   const classes = useStyles();
-
   const { cart, removeCart, IncreastQuantity, DecreaseQuantity } = useContext(
     CartContext
   );
@@ -52,6 +50,7 @@ const Cart = () => {
                       <TableHead>
                         <TableRow>
                           <TableCell>Name</TableCell>
+                          <TableCell></TableCell>
                           <TableCell align="right">Quantity</TableCell>
                           <TableCell align="right">Price</TableCell>
                           <TableCell align="right">Action</TableCell>
@@ -62,6 +61,13 @@ const Cart = () => {
                           <TableRow key={cartItem.name}>
                             <TableCell component="th" scope="row">
                               {cartItem.name}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              <img 
+                                src={`/images/${cartItem.id}.jpg`}
+                                height="50"
+                                widht="50"
+                              />
                             </TableCell>
                             <TableCell align="right">
                               <Button
@@ -108,9 +114,7 @@ const Cart = () => {
                   <List>
                     <ListItem>
                       <Grid container>
-                        <Typography variant="h6">
-                          Total: {subTotal}
-                        </Typography>
+                        <Typography variant="h6">Total: {subTotal}</Typography>
                       </Grid>
                     </ListItem>
                     <ListItem>

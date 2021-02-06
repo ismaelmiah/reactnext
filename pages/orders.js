@@ -45,35 +45,25 @@ const orders = ({ orders }) => {
                   <Table aria-label="Orders">
                     <TableHead>
                       <TableRow>
-                        <TableCell align="right">Order Date</TableCell>
-                        <TableCell align="right">Products Quantity</TableCell>
-                        <TableCell align="right">Total Price</TableCell>
-                        <TableCell align="right">Action</TableCell>
+                        <TableCell>Order ID</TableCell>
+                        <TableCell>Order Date</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {orders.map((order) => (
-                        <TableRow key={order.id}>
-                          <TableCell component="th" scope="row" align="right">
-                            {order.date}
+                        <TableRow
+                          key={order.id}
+                          hover
+                          style={{cursor: "pointer"}}
+                          onClick={() => {
+                            router.push(`/orders/${order.id}`);
+                          }}
+                        >
+                          <TableCell component="th" scope="row">
+                            {order.id}
                           </TableCell>
-                          <TableCell align="right">{order.quantity}</TableCell>
-                          <TableCell align="right">{order.total}</TableCell>
-                          <TableCell align="right">
-                            <Button
-                              color="primary"
-                              onClick={() => {
-                                router.push(`/orders/${order.id}`);
-                              }}
-                            >
-                              <InfoIcon />
-                            </Button>
-                            <Button
-                              color="secondary"
-                              onClick={() => removeOrder(order.id)}
-                            >
-                              <DeleteIcon />
-                            </Button>
+                          <TableCell component="th" scope="row">
+                            {order.date}
                           </TableCell>
                         </TableRow>
                       ))}
