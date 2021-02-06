@@ -49,25 +49,34 @@ const orders = ({ orders }) => {
                         <TableCell>Order Date</TableCell>
                       </TableRow>
                     </TableHead>
-                    <TableBody>
-                      {orders.map((order) => (
-                        <TableRow
-                          key={order.id}
-                          hover
-                          style={{cursor: "pointer"}}
-                          onClick={() => {
-                            router.push(`/orders/${order.id}`);
-                          }}
-                        >
-                          <TableCell component="th" scope="row">
-                            {order.id}
-                          </TableCell>
-                          <TableCell component="th" scope="row">
-                            {order.date}
-                          </TableCell>
+
+                    {orders.length == 0 ? (
+                      <TableRow >
+                        <TableCell colSpan={2} style={{margin: "20px 0px"}} align="center">
+                        You didn't make any order previously
+                        </TableCell>
                         </TableRow>
-                      ))}
-                    </TableBody>
+                    ) : (
+                      <TableBody>
+                        {orders.map((order) => (
+                          <TableRow
+                            key={order.id}
+                            hover
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              router.push(`/orders/${order.id}`);
+                            }}
+                          >
+                            <TableCell component="th" scope="row">
+                              {order.id}
+                            </TableCell>
+                            <TableCell component="th" scope="row">
+                              {order.date}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    )}
                   </Table>
                 </TableContainer>
               </Grid>
