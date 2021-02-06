@@ -176,7 +176,7 @@ const Checkout = () => {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {cart.map((cartItem, index) => (
+                            {cart.map((cartItem) => (
                               <TableRow key={cartItem.name}>
                                 <TableCell component="th" scope="row">
                                   {cartItem.name}

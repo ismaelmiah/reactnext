@@ -73,7 +73,7 @@ const Cart = () => {
                                 -
                               </Button>
                               <span style={{ margin: "0px 10px" }}>
-                                {cartItem.quantity}
+                                {cartItem.cartquantity}
                               </span>
                               <Button
                                 onClick={() => IncreastQuantity(index)}

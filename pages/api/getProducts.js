@@ -2,19 +2,17 @@ var fs = require("fs");
 
 export default (req, res) => {
   if (req.method === "POST") {
-    let newData = JSON.parse(req.body);
-    fs.readFile("Data/products.json", "utf8", (err, data) => {
-      let products = JSON.parse(data).map((product) => {
-        for (let i = 0; i < newData.length; i++) {
-          if (newData[i].id === product.id) {
-            product.quantity -= newData[i].cart_qty;
-            return product;
-          } else return product;
-        }
+    const cartData = JSON.parse(req.body);
+    fs.readFile("utils/data.json", "utf8", (err, data) => {
+      let products = JSON.parse(data).map((x) => {
+        cartData.map((c) => {
+          if (c.id == x.id) {
+            x.quantity -= c.quantity;
+            return x;
+          } else return x;
+        });
       });
-      fs.writeFile("Data/products.json", JSON.stringify(products), (err) => {
-        if (err) console.log(err);
-      });
+      fs.writeFile("utils/data.json", JSON.stringify(products));
     });
     res.status(201).json({});
   } else {

@@ -12,12 +12,12 @@ export const CartProvider = (props) => {
       (item) => item.id === product.id
     );
     if (updatedItemIndex < 0) {
-      updatedCart.push({ ...product, quantity: 1 });
+      updatedCart.push({ ...product, cartquantity: 1 });
     } else {
       const updatedItem = {
         ...updatedCart[updatedItemIndex],
       };
-      updatedItem.quantity++;
+      updatedItem.cartquantity++;
       updatedCart[updatedItemIndex] = updatedItem;
     }
 
@@ -27,13 +27,6 @@ export const CartProvider = (props) => {
 
   const removeCart = (id) => {
     const updatedCart = [...cart.filter((item, index) => index !== id)];
-
-    // updatedCart.forEach((item, index) => {
-    //   if (item.id === id) {
-    //     cart.splice(index, 1);
-    //   }
-    // });
-
     localStorage.setItem("mycart", JSON.stringify(updatedCart));
     setCart(updatedCart);
   };
@@ -44,7 +37,12 @@ export const CartProvider = (props) => {
     const updatedItem = {
       ...updatedCart[id],
     };
-    updatedItem.quantity++;
+    if (updatedItem.quantity >= updatedItem.cartquantity + 1) {
+      updatedItem.cartquantity++;
+    } else {
+      alert("Product Stock Out");
+    }
+    console.log("UpdatedITem ", updatedItem);
     updatedCart[id] = updatedItem;
     localStorage.setItem("mycart", JSON.stringify(updatedCart));
     setCart(updatedCart);
@@ -56,9 +54,9 @@ export const CartProvider = (props) => {
     const updatedItem = {
       ...updatedCart[id],
     };
-    updatedItem.quantity === 1
-      ? (updatedItem.quantity = 1)
-      : (updatedItem.quantity -= 1);
+    updatedItem.cartquantity === 1
+      ? (updatedItem.cartquantity = 1)
+      : (updatedItem.cartquantity -= 1);
     updatedCart[id] = updatedItem;
 
     localStorage.setItem("mycart", JSON.stringify(updatedCart));
@@ -66,7 +64,7 @@ export const CartProvider = (props) => {
   };
 
   useEffect(() => {
-    if(JSON.parse(localStorage.getItem("mycart"))){
+    if (JSON.parse(localStorage.getItem("mycart"))) {
       setCart(JSON.parse(localStorage.getItem("mycart")));
     }
   }, []);
