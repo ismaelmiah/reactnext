@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 
 import {
   Button,
@@ -28,23 +28,15 @@ const Cart = () => {
   );
 
   let subTotal = 0;
-  console.log("Cart - ", cart);
-
   for (let key in cart) {
-    subTotal += (cart[key].price * cart[key].quantity);
+    subTotal += cart[key].price * cart[key].quantity;
   }
 
-  const quantityChangeHandler = (product, newQuantity) => {
-    console.log(product.id, newQuantity);
-    UpdateCart(product.id, newQuantity);
-    console.log("Updated Cart ", cart);
-  };
-
   return (
-    <Layout>
+    <Layout title="Cart">
       {cart.length == 0 ? (
         <Typography variant="h1" align="center" component="h1">
-          Your Cart is Empty
+          Cart is Empty
         </Typography>
       ) : (
         <div>
@@ -117,7 +109,7 @@ const Cart = () => {
                     <ListItem>
                       <Grid container>
                         <Typography variant="h6">
-                          Subtotal: {subTotal}
+                          Total: {subTotal}
                         </Typography>
                       </Grid>
                     </ListItem>
