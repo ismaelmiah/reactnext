@@ -45,7 +45,7 @@ export default function ProductDetails({ product }) {
     addToCart(product);
   };
   return (
-    <Layout>
+    <Layout title="Details">
       <Slide key={product.name} direction="up" in={true}>
         <Grid container spacing={1}>
           <Grid item md={6}>
@@ -94,7 +94,9 @@ export default function ProductDetails({ product }) {
                       Status
                     </Grid>
                     <Grid item xs={6}>
-                      {product.quantity > 0 ? "In Stock" : "Unavailable"}
+                      {product.quantity > 0
+                        ? `In Stock: ${product.quantity}`
+                        : "Unavailable"}
                     </Grid>
                   </Grid>
                 </ListItem>
@@ -114,7 +116,7 @@ export default function ProductDetails({ product }) {
                     <Button
                       type="button"
                       fullWidth
-                      disabled
+                      disabled={true}
                       variant="contained"
                       color="primary"
                       onClick={addToCartHandler}

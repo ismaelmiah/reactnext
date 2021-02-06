@@ -13,20 +13,14 @@ import { useStyles } from "../utils/styles";
 import { Badge } from "@material-ui/core";
 import  CartContext from "./cartContext";
 
-export const Layout = ({ children }) => {
+export const Layout = ({ children, title="Home" }) => {
   const classes = useStyles();
-  const { cart, setCart } = useContext(CartContext);
-  
-  // useEffect(() => {
-  //   console.log("CartContextLayout - ", cart);
-  //   return () => setCart(JSON.parse(localStorage.getItem("mycart")));
-  // }, []);
-
+  const { cart } = useContext(CartContext);
   return (
     <React.Fragment>
       <Head>
         <meta charSet="utf-8" />
-        <title>E-commerce</title>
+        <title>{`${title} - E-commerce`}</title>
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"
@@ -51,10 +45,9 @@ export const Layout = ({ children }) => {
                 href="/"
                 className={classes.toolbarTitle}
               >
-                Ecommerce
+                {`${title}`}
               </Link>
             </NextLink>
-
             <nav>
               <NextLink href="/cart">
                 <Link
@@ -70,6 +63,18 @@ export const Layout = ({ children }) => {
                   ) : (
                     <ShoppingCartIcon />
                   )}
+                </Link>
+              </NextLink>
+            </nav>
+            <nav>
+              <NextLink href="/order">
+                <Link
+                  variant="button"
+                  color="textPrimary"
+                  href="/order"
+                  className={classes.link}
+                >
+                  My Order
                 </Link>
               </NextLink>
             </nav>

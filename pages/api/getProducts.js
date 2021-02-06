@@ -2,21 +2,26 @@ var fs = require("fs");
 
 export default (req, res) => {
   if (req.method === "POST") {
-    let newData = JSON.parse(req.body);
-    fs.readFile("Data/products.json", "utf8", (err, data) => {
-      let products = JSON.parse(data).map((product) => {
-        for (let i = 0; i < newData.length; i++) {
-          if (newData[i].id === product.id) {
-            product.quantity -= newData[i].cart_qty;
-            return product;
-          } else return product;
+    const cartData = JSON.parse(req.body);
+
+    fs.readFile("utils/data.json", "utf8", (err, data) => {
+      const Data = JSON.parse(data);
+
+      let products = Data.map((x) => {
+        for (let i = 0; i < cartData.length; i++) {
+          if (cartData[i].id === x.id) {
+            x.quantity -= cartData[i].cartquantity;
+            return x;
+          } else return x;
         }
       });
-      fs.writeFile("Data/products.json", JSON.stringify(products), (err) => {
-        if (err) console.log(err);
+
+      fs.writeFile("utils/data.json", JSON.stringify(products), (err) => {
+        if (err) throw err;
+        console.log("The file has been saved!");
       });
     });
-    res.status(201).json({});
+    res.status(200).json({});
   } else {
     const data = fs.readFileSync("utils/data.json", "utf8");
     if (req.query.id != null) {
