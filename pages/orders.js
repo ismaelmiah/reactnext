@@ -1,13 +1,9 @@
 import React from "react";
-import Link from "next/link";
 import DeleteIcon from "@material-ui/icons/Delete";
-import InfoIcon from '@material-ui/icons/Info';
+import InfoIcon from "@material-ui/icons/Info";
 import {
   Button,
-  Card,
   Grid,
-  List,
-  ListItem,
   Slide,
   Table,
   TableBody,
@@ -20,8 +16,9 @@ import {
 import data from "../utils/order.json";
 
 import { Layout } from "../components/Layout";
+import router from "next/router";
 
-export const getStaticProps = async (context) => {
+export const getStaticProps = async () => {
   return {
     props: {
       orders: data,
@@ -29,13 +26,16 @@ export const getStaticProps = async (context) => {
   };
 };
 
+const removeOrder = (orderId) => {
+  alert(orderId);
+};
+
 const orders = ({ orders }) => {
-  //console.log("Orders - ", orders);
-  orders.map((item) => {
-    console.log(item, " order");
-  });
   return (
-    <Layout>
+    <Layout title="My Orders">
+      <Typography variant="h1" align="center" component="h1">
+        All Orders
+      </Typography>
       <Grid container spacing={1}>
         <Slide direction="up" in={true}>
           <Grid container spacing={1}>
@@ -52,27 +52,31 @@ const orders = ({ orders }) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {orders.map((order) =>
-                        order.orders.map((item) => (
-                          <TableRow key={item.id}>
-                            <TableCell component="th" scope="row">
-                              {order.date}
-                            </TableCell>
-                            <TableCell align="right">
-                              {order.quantity}
-                            </TableCell>
-                            <TableCell align="right">{order.total}</TableCell>
-                            <TableCell align="right">
-                              <Button color="primary" onClick={() => {}}>
-                                <InfoIcon />
-                              </Button>
-                              <Button color="secondary">
-                                <DeleteIcon />
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))
-                      )}
+                      {orders.map((order) => (
+                        <TableRow key={order.id}>
+                          <TableCell component="th" scope="row" align="right">
+                            {order.date}
+                          </TableCell>
+                          <TableCell align="right">{order.quantity}</TableCell>
+                          <TableCell align="right">{order.total}</TableCell>
+                          <TableCell align="right">
+                            <Button
+                              color="primary"
+                              onClick={() => {
+                                router.push(`/orders/${order.id}`);
+                              }}
+                            >
+                              <InfoIcon />
+                            </Button>
+                            <Button
+                              color="secondary"
+                              onClick={() => removeOrder(order.id)}
+                            >
+                              <DeleteIcon />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
                     </TableBody>
                   </Table>
                 </TableContainer>
