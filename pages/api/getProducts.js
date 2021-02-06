@@ -21,7 +21,7 @@ export default (req, res) => {
         console.log("The file has been saved!");
       });
     });
-    res.status(201).json({});
+    res.status(200).json({});
   } else {
     const data = fs.readFileSync("utils/data.json", "utf8");
     if (req.query.id != null) {

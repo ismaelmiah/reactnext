@@ -48,7 +48,6 @@ export const Layout = ({ children, title="Home" }) => {
                 {`${title}`}
               </Link>
             </NextLink>
-
             <nav>
               <NextLink href="/cart">
                 <Link
@@ -64,6 +63,18 @@ export const Layout = ({ children, title="Home" }) => {
                   ) : (
                     <ShoppingCartIcon />
                   )}
+                </Link>
+              </NextLink>
+            </nav>
+            <nav>
+              <NextLink href="/order">
+                <Link
+                  variant="button"
+                  color="textPrimary"
+                  href="/order"
+                  className={classes.link}
+                >
+                  My Order
                 </Link>
               </NextLink>
             </nav>

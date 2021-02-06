@@ -23,7 +23,6 @@ export const getStaticProps = async (context) => {
 };
 
 export default function Home({ products }) {
-  console.log("Products = ", products);
 
   return (
     <Layout>

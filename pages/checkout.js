@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import React, { useContext, useState } from "react";
 import CartContext from "../components/cartContext";
+import router from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,8 +80,19 @@ const Checkout = () => {
       method: "POST",
       body: JSON.stringify(cart),
     }).then((res) => {
-      if (res.status) {
-        setCart([]);
+      if (res.status == 200) {
+        fetch("http://localhost:3000/api/getOrder", {
+          method: "POST",
+          body: JSON.stringify({
+            user: CheckoutForm,
+            orders: cart,
+          }),
+        }).then((res, data) => {
+          if (res.status == 200) {
+            setCart([]);
+            res.json().then((data) => router.push(`/orders/${data.id}`));
+          }
+        });
       }
     });
   };
