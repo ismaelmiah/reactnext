@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { CartProvider } from "./context/cartContext";
+import { CartProvider } from "../context/cartContext";
 
 export default function MyApp({ pageProps, Component }) {
   useEffect(() => {

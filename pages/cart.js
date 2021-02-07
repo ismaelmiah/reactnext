@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { useStyles } from "../utils/styles";
-import CartContext from "./context/cartContext";
+import CartContext from "../context/cartContext";
 import Router from "next/router";
 import { Layout } from "../components/Layout";
 

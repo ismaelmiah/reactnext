@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 
 import { useStyles } from "../../utils/styles";
-import CartContext from "../context/cartContext";
+import CartContext from "../../context/cartContext";
 
 import { Layout } from "../../components/Layout";
 

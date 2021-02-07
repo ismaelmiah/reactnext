@@ -11,7 +11,7 @@ import { theme } from "../utils/styles";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useStyles } from "../utils/styles";
 import { Badge } from "@material-ui/core";
-import CartContext from "../pages/context/cartContext";
+import CartContext from "../context/cartContext";
 import CardTravelIcon from "@material-ui/icons/CardTravel";
 
 export const Layout = ({ children, title = "Home" }) => {
