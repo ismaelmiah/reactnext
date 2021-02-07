@@ -5,8 +5,6 @@ import {
   Button,
   Card,
   Grid,
-  MenuItem,
-  Select,
   List,
   ListItem,
   Slide,
@@ -14,7 +12,7 @@ import {
 } from "@material-ui/core";
 
 import { useStyles } from "../../utils/styles";
-import CartContext from "./../../components/cartContext";
+import CartContext from "../../context/cartContext";
 
 import { Layout } from "../../components/Layout";
 
@@ -39,7 +37,7 @@ export const getStaticProps = async (context) => {
 export default function ProductDetails({ product }) {
   const classes = useStyles();
 
-  const { cart, addToCart } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
 
   const addToCartHandler = () => {
     addToCart(product);

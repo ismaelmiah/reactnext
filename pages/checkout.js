@@ -14,8 +14,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useContext, useState } from "react";
-import CartContext from "../components/cartContext";
-import router from 'next/router'
+import CartContext from "../context/cartContext";
+import router from "next/router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,14 +41,13 @@ const Checkout = () => {
 
   let subTotal = 0;
   for (let key in cart) {
-    subTotal += cart[key].price * cart[key].quantity;
+    subTotal += cart[key].price * cart[key].cartquantity;
   }
 
   const [CheckoutForm, setCheckoutForm] = useState({
     Name: null,
     Mobile: null,
     Address: null,
-    ZipCode: null,
   });
 
   const nameSet = (e) => {
@@ -69,11 +68,6 @@ const Checkout = () => {
     });
   };
 
-  const zipSet = (e) => {
-    setCheckoutForm((prev) => {
-      return { ...prev, ZipCode: e };
-    });
-  };
 
   const formSubmit = () => {
     fetch("http://localhost:3000/api/getProducts", {
@@ -90,6 +84,7 @@ const Checkout = () => {
         }).then((res, data) => {
           if (res.status == 200) {
             setCart([]);
+            localStorage.clear();
             res.json().then((data) => router.push(`/orders/${data.id}`));
           }
         });
@@ -128,13 +123,6 @@ const Checkout = () => {
                       id="standard-error"
                       label="Address"
                       onChange={(e) => addressSet(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <TextField
-                      id="standard-error"
-                      label="Zip Code"
-                      onChange={(e) => zipSet(e.target.value)}
                     />
                   </div>
                   <div style={{ margin: "20px 0px 10px 0px" }}>

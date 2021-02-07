@@ -37,6 +37,8 @@ export default function Home({ products }) {
                       component="img"
                       alt={product.name}
                       image={`/images/${product.id}.jpg`}
+                      height={250}
+                      width={200}
                     />
                     <CardContent>
                       <Typography

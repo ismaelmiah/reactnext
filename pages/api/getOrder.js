@@ -15,9 +15,10 @@ export default (req, res) => {
       quantity += e.cartquantity;
     });
     newOrder.total = total;
-    newOrder.date = `${new Date().getDate()}-${
+    newOrder.date = `${new Date().getDate()}/ ${
       new Date().getMonth() + 1
-    }-${new Date().getFullYear()}`;
+    }/${new Date().getFullYear()}
+     -${new Date().getHours()} : ${new Date().getMinutes()} : ${new Date().getSeconds()}`;
 
     newOrder.quantity = quantity;
 

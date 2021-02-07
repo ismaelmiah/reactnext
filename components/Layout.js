@@ -11,9 +11,10 @@ import { theme } from "../utils/styles";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useStyles } from "../utils/styles";
 import { Badge } from "@material-ui/core";
-import  CartContext from "./cartContext";
+import CartContext from "../context/cartContext";
+import CardTravelIcon from "@material-ui/icons/CardTravel";
 
-export const Layout = ({ children, title="Home" }) => {
+export const Layout = ({ children, title = "Home" }) => {
   const classes = useStyles();
   const { cart } = useContext(CartContext);
   return (
@@ -45,7 +46,7 @@ export const Layout = ({ children, title="Home" }) => {
                 href="/"
                 className={classes.toolbarTitle}
               >
-                {`${title}`}
+                E-Commerce
               </Link>
             </NextLink>
             <nav>
@@ -67,14 +68,14 @@ export const Layout = ({ children, title="Home" }) => {
               </NextLink>
             </nav>
             <nav>
-              <NextLink href="/order">
+              <NextLink href="/orders">
                 <Link
                   variant="button"
                   color="textPrimary"
-                  href="/order"
+                  href="/orders"
                   className={classes.link}
                 >
-                  My Order
+                  <CardTravelIcon />
                 </Link>
               </NextLink>
             </nav>

@@ -1,72 +1,86 @@
 [
   {
     "id": 1,
-    "name": "Dwayne",
-    "quantity": 1,
+    "name": "Funko Pop! Deluxe, Marvel",
+    "quantity": 5,
     "price": 82,
-    "description": "Suspendisse accumsan tortor quis turpis."
+    "description": "Avengers Victory Shawarma Series - Tony Stark (Iron Man), Amazon Exclusive, Figure 2 of 6"
   },
   {
     "id": 2,
-    "name": "Jephthah",
-    "quantity": 2,
+    "name": "Play-Doh Modeling",
+    "quantity": 8,
     "price": 48,
-    "description": "Cras in purus eu magna vulputate luctus."
+    "description": "Compound 10 Pack Case of Colors, Non-Toxic, Assorted Colors, 2 Oz Cans, Ages 2 & Up, (Amazon Exclusive), Multicolor"
   },
   {
     "id": 3,
-    "name": "Wilona",
-    "quantity": 3,
+    "name": "Nuby Ice Gel Teether Keys",
+    "quantity": 5,
     "price": 67,
-    "description": "Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla."
+    "description": "Multi-surface teething makes this teether perfect for assisting in the eruption of front, middle and back teeth"
   },
   {
     "id": 4,
-    "name": "Husain",
-    "quantity": 4,
+    "name": "Hasbro Connect 4 Game",
+    "quantity": 10,
     "price": 56,
-    "description": "Nunc nisl."
+    "description": "Classic Connect 4 game is disc dropping fun Choose yellow or red discs. For 2 players"
   },
   {
     "id": 5,
-    "name": "Luciano",
+    "name": "Keadic 9Pcs Gundam Model Tools Kit",
     "quantity": 5,
     "price": 7,
-    "description": "Nulla justo."
+    "description": "Hobby Building Tools Craft Set for Basic Model Building, Repairing and Fixing"
   },
   {
     "id": 6,
-    "name": "Yovonnda",
+    "name": "Learning Resources MathLink Cubes",
     "quantity": 6,
     "price": 51,
-    "description": "Ut at dolor quis odio consequat varius."
+    "description": "Homeschool, Educational Counting Toy, Math Blocks, Linking Cubes, Early Math Skills, Math Cubes Manipulatives, Set of 100 Cubes, Easter Gifts for Kids, Ages 5+"
   },
   {
     "id": 7,
-    "name": "Kacy",
+    "name": "LMC Products Rainbow",
     "quantity": 7,
     "price": 34,
-    "description": "Suspendisse potenti."
+    "description": "LMC Products Rainbow igsaw Puzzle - 1000 Piece Puzzles for Adults - 26.5'' in Diameter"
   },
   {
     "id": 8,
-    "name": "Tobye",
+    "name": "Champion Sports 8-1/2",
     "quantity": 8,
     "price": 62,
-    "description": "Donec quis orci eget orci vehicula condimentum."
+    "description": "Durable construction for long-lasting use Textured surface is easy to grip Red for high visibility High bouncing"
   },
   {
     "id": 9,
-    "name": "Grange",
+    "name": "Binken Cartoon Vehicles ",
     "quantity": 9,
     "price": 3,
-    "description": "Integer ac leo."
+    "description": "Playset Transport Car Carrier Truck - 5 in 1 Push and Go Trailer W/ Sounds & Lights, 4 Macaron Friction Power Car/Airplane/Helicopter for Chir Play"
   },
   {
     "id": 10,
-    "name": "Cele",
+    "name": "Wagner's 76026",
     "quantity": 10,
     "price": 53,
-    "description": "Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo."
+    "description": "Wagner's 76026 Four Season Black Oil Sunflower Seed Wild Bird Food, 20-Pound Bag"
+  },
+  {
+    "id": 11,
+    "name": "WD 2TB Elements Portable External HDD",
+    "quantity": 10,
+    "price": 53,
+    "description": "High Capacity; Compatibility Formatted NTFS for Windows 10, Windows 8.1, Windows 7; USB 3.0, Compatible with PC, Mac, PS4 & Xbox - WDBU6Y0020BBK-WESN"
+  },
+  {
+    "id": 12,
+    "name": "Apricorn SATA Wire Notebook Hard Drive",
+    "quantity": 10,
+    "price": 53,
+    "description": "Connects to any 2.5 inch SATA Hard Drive or Solid State Drive, Upgrade Kitwith USB 3.0 Connection ASW-USB3-25 (Grey)"
   }
 ]
