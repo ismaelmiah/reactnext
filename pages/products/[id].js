@@ -51,6 +51,8 @@ export default function ProductDetails({ product }) {
               alt={product.name}
               src={`/images/${product.id}.jpg`}
               className={classes.largeImage}
+              height="500px"
+              width="150px"
             />
           </Grid>
           <Grid item md={3} xs={12}>
