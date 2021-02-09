@@ -17,7 +17,11 @@ export const CartProvider = (props) => {
       const updatedItem = {
         ...updatedCart[updatedItemIndex],
       };
-      updatedItem.cartquantity++;
+      if (updatedItem.quantity >= updatedItem.cartquantity + 1) {
+        updatedItem.cartquantity++;
+      } else {
+        alert("Product Stock Out");
+      }
       updatedCart[updatedItemIndex] = updatedItem;
     }
 
