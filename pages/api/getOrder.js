@@ -18,7 +18,7 @@ export default (req, res) => {
     newOrder.date = `${new Date().getDate()}/ ${
       new Date().getMonth() + 1
     }/${new Date().getFullYear()}
-     -${new Date().getHours()} : ${new Date().getMinutes()} : ${new Date().getSeconds()}`;
+       -  ${new Date().getHours()} : ${new Date().getMinutes()} : ${new Date().getSeconds()}`;
 
     newOrder.quantity = quantity;
 

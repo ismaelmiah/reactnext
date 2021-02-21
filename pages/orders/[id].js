@@ -42,7 +42,6 @@ export async function getServerSideProps({params}){
   let orders
   await fetch(`http://localhost:3000/api/getOrder/?id=${params.id}`)
   .then(res=>res.json()).then(data=>{
-    console.log("Data - ", data);
     orders = data
   }).catch(err=>{if(err)console.log(err)})
   return {
