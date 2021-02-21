@@ -31,13 +31,13 @@ export default (req, res) => {
     );
     res.status(200).json({ id: newOrder.id });
   } else {
-    let data = fs.readFileSync("Data/orders.json", "utf8");
+    let data = fs.readFileSync("utils/order.json", "utf8");
     if (req.query.id != null) {
       let item = JSON.parse(data).filter((item) => {
-        return item.orderID == req.query.id;
+        return item.id == req.query.id;
       });
       if (item.length) res.status(200).json(item[0]);
-      else res.status(404).json({ err: "No ID Found" });
+      else res.status(404).json({ err: `${req.query.id} not found` });
     } else res.status(200).json(JSON.parse(data));
   }
 };
