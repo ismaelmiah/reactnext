@@ -18,15 +18,7 @@ import {
   Typography,
 } from "@material-ui/core";
 
-export const getStaticPaths = async () => {
-  const paths = data.map((x) => {
-    return { params: { id: x.id.toString() } };
-  });
-  return {
-    paths,
-    fallback: false,
-  };
-};
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -44,14 +36,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const getStaticProps = async (context) => {
-  const id = parseInt(context.params.id);
-  const orders = data.filter((x) => x.id === id)[0];
-  return {
-    props: { orders },
-  };
-};
 
+
+export async function getServerSideProps({params}){
+  let orders
+  await fetch(`http://localhost:3000/api/getOrder/?id=${params.id}`)
+  .then(res=>res.json()).then(data=>{
+    orders = data
+  }).catch(err=>{if(err)console.log(err)})
+  return {
+          props: {
+            orders
+          }
+      }
+  
+}
 const userProfile = makeStyles({
   root: {
     minWidth: 275,
@@ -77,7 +76,6 @@ const Orders = ({ orders }) => {
   for (let key in order) {
     subTotal += order[key].price * order[key].cartquantity;
   }
-
   return (
     <Layout title="Order Details">
       <Typography variant="h1" align="center" component="h1">

@@ -46,7 +46,6 @@ export const CartProvider = (props) => {
     } else {
       alert("Product Stock Out");
     }
-    console.log("UpdatedITem ", updatedItem);
     updatedCart[id] = updatedItem;
     localStorage.setItem("mycart", JSON.stringify(updatedCart));
     setCart(updatedCart);
